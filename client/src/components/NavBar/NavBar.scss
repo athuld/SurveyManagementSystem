@@ -1,0 +1,40 @@
+@import "../../main.scss";
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: $color-dark;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 2.5vh;
+  padding-bottom: 2.5vh;
+  background-color: #EFF6EC;
+  font-weight: 600;
+  box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+
+
+  .navig-items {
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+  }
+}
+
+.user-btn {
+  display: inline-block;
+  padding: 0.5em 1.5em;
+  border-radius: 0.5em;
+  font-size: small;
+  background-color: $color-primary;
+  a{
+  color: $color-light;
+  }
+}

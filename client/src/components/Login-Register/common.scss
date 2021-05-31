@@ -1,0 +1,88 @@
+@import "../../main.scss";
+
+.main-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80vw;
+}
+
+.auth-image {
+    width: 40vw;
+    height: 85vh;
+}
+
+.form-container {
+    transition-timing-function: ease-in;
+    background-color: $color-seconday;
+    padding: 3rem 6rem;
+    border-radius: 0.5em;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+
+    h2 {
+        text-align: center;
+        color: $color-dark;
+    }
+    label {
+        font-size: small;
+    }
+    .info {
+        font-size: small;
+        text-align: center;
+        margin-left: 1rem;
+    }
+
+    input {
+        background: #e4e4e4;
+        border: none;
+        padding: 12px;
+        border-radius: 0.5em;
+        width: 15rem;
+        outline: none;
+    }
+    .register-btn {
+        border: none;
+        display: inline-block;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        padding: 0.92em 7.2em;
+        border-radius: 0.5em;
+        background: $color-primary;
+        color: $color-light;
+        cursor: pointer;
+    }
+    .login {
+        padding: 0.92em 7.6em;
+    }
+}
+
+.circle-1 {
+    position: absolute;
+    overflow: hidden;
+    width: 30vw;
+    height: 30vw;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+}
+.circle-1::before {
+    content: "";
+    position: absolute;
+    transform: translate(40%, 40%);
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background-color: rgba(168, 218, 220, 0.4);
+}
+
+.circle-2 {
+    position: absolute;
+    overflow: hidden;
+    width: 25vw;
+    height: 25vw;
+    bottom: 50%;
+    left: 15%;
+    border-radius: 50%;
+    background-color: rgba(168, 218, 220, 0.4);
+    z-index: -1;
+}
