@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 // Register //
 router.post("/register", async (req, res) => {
   // Destructure them variables
-  const { firstname, lastname, email, password } = req.body.data;
+  const { firstname, lastname, email, gender, dob, password } = req.body.data;
 
   //Check if the user exist //
   const emailExist = await User.findOne({ email });
@@ -22,6 +22,8 @@ router.post("/register", async (req, res) => {
     firstName: firstname,
     lastName: lastname,
     email,
+    gender,
+    dob,
     password: hashedPassword,
   });
   try {
