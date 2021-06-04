@@ -2,14 +2,52 @@ import { useEffect, useState } from "react";
 import Cookie from "js-cookie";
 import axios from "axios";
 import "./UserHome.scss";
+import {
+  makeStyles,
+  Backdrop,
+  CircularProgress,
+  Paper,
+  Grid,
+  Avatar,
+} from "@material-ui/core";
+import {
+  Chart,
+  BarSeries,
+  Title,
+  ArgumentAxis,
+  ValueAxis,
+} from "@devexpress/dx-react-chart-material-ui";
+import { Animation } from "@devexpress/dx-react-chart";
+import grandpa from "./assets/grandpa.png";
+import NavBar from "../NavBar/NavBar";
+import FamilyCard from "./FamilyCard";
+import FamilyAddBtn from "./FamilyAddBtn";
+
+const useStyles = makeStyles((theme) => ({
+  large: {
+    width: theme.spacing(20),
+    height: theme.spacing(20),
+  },
+  paper: {
+    padding: theme.spacing(3),
+  },
+}));
+
+const chartData = [
+  { name: "Athul Dinesan", survey: 4 },
+  { name: "Louis Vuitton", survey: 3 },
+];
 
 const UserHome = () => {
   const [userDetails, setUserDetails] = useState({});
+  const [memberNum, setMemberNum] = useState(0);
+  const classes = useStyles();
+
+  const headers = {
+    autherisation: `Bearer ${Cookie.get("accessToken")}`,
+  };
 
   const getUserDetails = async () => {
-    const headers = {
-      autherisation: `Bearer ${Cookie.get("accessToken")}`,
-    };
     try {
       const res = await axios.get("http://localhost:5001/api/user", {
         headers,
@@ -23,15 +61,93 @@ const UserHome = () => {
 
   useEffect(() => {
     getUserDetails();
-  }, []);
+  }, [memberNum]);
 
   if (
     Object.keys(userDetails).length === 0 &&
     userDetails.constructor === Object
   ) {
-    return <p> Loading .....</p>;
+    return (
+      <Backdrop open>
+        <div style={{ position: "relative" }}>
+          <span style={{ position: "absolute", top: ".5rem", left: "3rem" }}>
+            Loading....
+          </span>
+          <CircularProgress />
+        </div>
+      </Backdrop>
+    );
   }
-  return <div className="name">{`Hello ${userDetails.firstName}`}</div>;
+  return (
+    <div>
+      <NavBar user={true} />
+      <div className="container">
+        <h1 className="title">My Dashboard</h1>
+        <Grid container spacing={2} alignContent="center" alignItems="center">
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={2} className={classes.paper} id="profile-paper">
+              <Grid container spacing={2} alignItems="center">
+                <Grid item xs={12} sm={6}>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={grandpa}
+                    className={classes.large}
+                    id="avatar"
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <div className="profile-info">
+                    <p className="name">
+                      {userDetails.firstName} {userDetails.lastName}
+                    </p>
+                    <p className="general">{userDetails.email}</p>
+                    <p className="general">{userDetails.age} years old</p>
+                  </div>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper elevation={2} className={classes.paper} id="chart-paper">
+              <Chart data={chartData} height={160} rotated>
+                <ArgumentAxis />
+                <ValueAxis />
+
+                <BarSeries
+                  barWidth={1}
+                  valueField="survey"
+                  argumentField="name"
+                />
+                <Title text="Total Surveys" />
+                <Animation />
+              </Chart>
+            </Paper>
+          </Grid>
+        </Grid>
+        <span className="family">Family</span>
+        <Grid container spacing={2}>
+          {userDetails.members &&
+            userDetails.members.map((member, i) => {
+              return (
+                <FamilyCard
+                  key={i}
+                  id={member._id}
+                  firstName={member.firstName}
+                  lastName={member.lastName}
+                  age={member.age}
+                  headers={headers}
+                  setMemberNum={setMemberNum}
+                />
+              );
+            })}
+          {userDetails.members.length <= 3 && (
+            <FamilyAddBtn headers={headers} setMemberNum={setMemberNum} />
+          )}
+        </Grid>
+      </div>
+    </div>
+  );
 };
 
 export default UserHome;

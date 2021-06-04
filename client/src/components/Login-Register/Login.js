@@ -76,7 +76,7 @@ const Login = ({ setShowAlertModal, setIsLoggedIn }) => {
                 id="email"
                 name="email"
                 label="Email"
-                variant="outlined"
+                variant="filled"
                 className="login-email"
                 fullWidth
                 required
@@ -90,7 +90,7 @@ const Login = ({ setShowAlertModal, setIsLoggedIn }) => {
                 label="Password"
                 className="login-password"
                 type="password"
-                variant="outlined"
+                variant="filled"
                 fullWidth
                 required
               />

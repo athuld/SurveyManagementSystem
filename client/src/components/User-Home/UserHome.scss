@@ -1,0 +1,74 @@
+@import "../../main.scss";
+
+.container {
+    position: relative;
+    width: 90vw;
+    background-color: #eae4e9;
+    margin: 0 auto;
+    padding: 2rem;
+    margin-top: 4rem;
+    border-radius: 0.5em;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+
+    .title {
+        position: absolute;
+        top: 0;
+        color: $color-dark;
+        transform: translate(-14%, -105%);
+    }
+}
+
+#profile-paper {
+    background-color: #cddafd;
+    margin-bottom: 2em;
+}
+#chart-paper {
+    background-color: #fde2e4;
+    margin-bottom: 2em;
+}
+#family-paper {
+    background-color: #bee1e6;
+}
+
+#avatar {
+    margin: 0 auto;
+}
+
+.profile-info {
+    text-align: center;
+    .name {
+        color: $color-dark;
+        font-size: 1.6rem;
+        max-width: 15ch;
+        font-weight: 800;
+    }
+    .general {
+        font-size: 0.8rem;
+        font-weight: 300;
+    }
+}
+
+.family {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $color-dark;
+}
+
+#icon-btn {
+    margin-left: 2.5em;
+    color: #ff7a82;
+}
+
+#delete-btn {
+    background-color: #ff7a82;
+    color: $color-dark;
+}
+
+#add-btn:hover {
+    background-color: transparent;
+}
+
+#new-member-btn {
+    background-color: $color-primary;
+    color: $color-light;
+}

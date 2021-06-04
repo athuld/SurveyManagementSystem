@@ -16,7 +16,12 @@ app.listen(5001, console.log("Server Started"));
 // Connect to database
 mongoose.connect(
   process.env.DB_URI,
-  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  },
   () => {
     console.log("Database Connected");
   }

@@ -1,21 +1,37 @@
 const router = require("express").Router();
-const verify = require("./verifyToken");
-const User = require("../models/user");
+const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// Register //
+/**
+ * REGISTER NEW USERS
+ *
+ * Can be used to register new users to the system
+ *
+ * ROUTE: PUBLIC
+ * URL: /api/auth/register
+ */
+
 router.post("/register", async (req, res) => {
-  // Destructure them variables
   const { firstname, lastname, email, gender, dob, password } = req.body.data;
 
   //Check if the user exist //
   const emailExist = await User.findOne({ email });
-  if (emailExist) return res.status(400).send("Email already exist");
+  if (emailExist)
+    return res.status(400).json({ message: "Email already exist" });
 
   // Hash the password //
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
+
+  // Calculate user age //
+  let currDay = new Date();
+  let userDob = new Date(dob);
+  let userAge = currDay.getFullYear() - userDob.getFullYear();
+  let m = currDay.getMonth() - userDob.getMonth();
+  if (m < 0 || (m === 0 && currDay.getDate() < userDob.getDate())) {
+    userAge--;
+  }
 
   // Create New User //
   const user = new User({
@@ -24,17 +40,29 @@ router.post("/register", async (req, res) => {
     email,
     gender,
     dob,
+    age: userAge,
     password: hashedPassword,
   });
+  console.log(user);
   try {
     const savedUser = await user.save();
     res.json({ message: "User Registered", id: savedUser._id });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ message: "Something went wrong " });
   }
 });
 
-// Login //
+/*************************************************************************************/
+
+/**
+ * LOGIN USER
+ *
+ * Can be used to login existing users which return a jwt token
+ *
+ * ROUTE: PUBLIC
+ * URL: /api/auth/login
+ */
+
 router.post("/login", async (req, res) => {
   const { email, password } = req.body.data;
 
@@ -51,5 +79,7 @@ router.post("/login", async (req, res) => {
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
   res.json({ message: "User logged in", token: token });
 });
+
+/*************************************************************************************/
 
 module.exports = router;

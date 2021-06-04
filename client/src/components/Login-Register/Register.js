@@ -92,7 +92,7 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
                     id="firstname"
                     name="firstname"
                     label="First Name"
-                    variant="outlined"
+                    variant="filled"
                     margin="dense"
                     required
                   />
@@ -102,7 +102,7 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
                     id="lastname"
                     name="lastname"
                     label="Last Name"
-                    variant="outlined"
+                    variant="filled"
                     margin="dense"
                     required
                   />
@@ -112,7 +112,7 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
                     id="email"
                     name="email"
                     label="Email"
-                    variant="outlined"
+                    variant="filled"
                     margin="dense"
                     required
                     fullWidth
@@ -120,7 +120,7 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <FormControl
-                    variant="outlined"
+                    variant="filled"
                     fullWidth
                     margin="dense"
                     required
@@ -144,6 +144,7 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
                   <TextField
                     id="date"
                     label="Date Of Birth"
+                    margin="normal"
                     type="date"
                     defaultValue="2017-05-24"
                     InputLabelProps={{
@@ -160,7 +161,7 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
                     name="password"
                     label="Password"
                     type="password"
-                    variant="outlined"
+                    variant="filled"
                     margin="dense"
                     required
                   />
@@ -171,7 +172,7 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
                     name="confirm_password"
                     label="Confirm Password"
                     type="password"
-                    variant="outlined"
+                    variant="filled"
                     error={validatePwd.error}
                     helperText={validatePwd.message}
                     margin="dense"
