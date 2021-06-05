@@ -33,6 +33,33 @@ router.post("/register", async (req, res) => {
     userAge--;
   }
 
+  // Assign Avatar
+  const getAvatar = () => {
+    if (userAge >= 60) {
+      if (gender === "Male") {
+        return "grandpa.png";
+      }
+      return "grandma.png";
+    }
+    if (userAge >= 30) {
+      if (gender === "Male") {
+        return "man.png";
+      }
+      return "woman.png";
+    }
+    if (userAge >= 18) {
+      if (gender === "Male") {
+        return "teenboy.png";
+      }
+      return "teengirl.png";
+    } else {
+      if (gender === "Male") {
+        return "boy.png";
+      }
+      return "girl.png";
+    }
+  };
+
   // Create New User //
   const user = new User({
     firstName: firstname,
@@ -42,8 +69,8 @@ router.post("/register", async (req, res) => {
     dob,
     age: userAge,
     password: hashedPassword,
+    avatar: getAvatar(),
   });
-  console.log(user);
   try {
     const savedUser = await user.save();
     res.json({ message: "User Registered", id: savedUser._id });

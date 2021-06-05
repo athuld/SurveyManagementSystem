@@ -15,11 +15,10 @@ a {
   align-items: center;
   padding-top: 2.5vh;
   padding-bottom: 2.5vh;
-  background-color: #EFF6EC;
+  background-color: #eff6ec;
   font-weight: 600;
   box-shadow: 0 2px 3px -1px rgba(0, 0, 0, 0.1);
   z-index: 5;
-
 
   .navig-items {
     display: flex;
@@ -30,11 +29,16 @@ a {
 
 .user-btn {
   display: inline-block;
-  padding: 0.5em 1.5em;
+  padding: 0.65em 1.4em;
   border-radius: 0.5em;
   font-size: small;
+  border: none;
   background-color: $color-primary;
-  a{
   color: $color-light;
+  a {
+    color: $color-light;
+  }
+  &:hover {
+    cursor: pointer;
   }
 }

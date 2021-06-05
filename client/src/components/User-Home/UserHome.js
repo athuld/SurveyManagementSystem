@@ -18,7 +18,6 @@ import {
   ValueAxis,
 } from "@devexpress/dx-react-chart-material-ui";
 import { Animation } from "@devexpress/dx-react-chart";
-import grandpa from "./assets/grandpa.png";
 import NavBar from "../NavBar/NavBar";
 import FamilyCard from "./FamilyCard";
 import FamilyAddBtn from "./FamilyAddBtn";
@@ -33,11 +32,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const chartData = [
-  { name: "Athul Dinesan", survey: 4 },
-  { name: "Louis Vuitton", survey: 3 },
-];
-
 const UserHome = () => {
   const [userDetails, setUserDetails] = useState({});
   const [memberNum, setMemberNum] = useState(0);
@@ -47,12 +41,30 @@ const UserHome = () => {
     autherisation: `Bearer ${Cookie.get("accessToken")}`,
   };
 
+  // Setup Graph Data //
+  if (userDetails.firstName) {
+    var surveyData = [
+      {
+        name: `${userDetails.firstName} ${userDetails.lastName}`,
+        surveys: userDetails.surveys,
+      },
+    ];
+
+    if (userDetails.members) {
+      for (let i = 0; i < userDetails.members.length; i++) {
+        surveyData.push({
+          name: `${userDetails.members[i].firstName} ${userDetails.members[i].lastName}`,
+          surveys: userDetails.members[i].surveys,
+        });
+      }
+    }
+  }
+
   const getUserDetails = async () => {
     try {
       const res = await axios.get("http://localhost:5001/api/user", {
         headers,
       });
-      console.log(res.data);
       setUserDetails(res.data);
     } catch (err) {
       console.log(err);
@@ -78,6 +90,7 @@ const UserHome = () => {
       </Backdrop>
     );
   }
+
   return (
     <div>
       <NavBar user={true} />
@@ -89,8 +102,8 @@ const UserHome = () => {
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={12} sm={6}>
                   <Avatar
-                    alt="Remy Sharp"
-                    src={grandpa}
+                    alt="User Avatar"
+                    src={`assets/${userDetails.avatar}`}
                     className={classes.large}
                     id="avatar"
                   />
@@ -110,13 +123,13 @@ const UserHome = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Paper elevation={2} className={classes.paper} id="chart-paper">
-              <Chart data={chartData} height={160} rotated>
+              <Chart data={surveyData} height={160} rotated>
                 <ArgumentAxis />
                 <ValueAxis />
 
                 <BarSeries
                   barWidth={1}
-                  valueField="survey"
+                  valueField="surveys"
                   argumentField="name"
                 />
                 <Title text="Total Surveys" />
@@ -133,6 +146,7 @@ const UserHome = () => {
                 <FamilyCard
                   key={i}
                   id={member._id}
+                  avatar={member.avatar}
                   firstName={member.firstName}
                   lastName={member.lastName}
                   age={member.age}

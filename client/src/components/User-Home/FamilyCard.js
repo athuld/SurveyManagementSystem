@@ -14,13 +14,12 @@ import {
   Button,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import grandpa from "./assets/grandpa.png";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
-  large: {
-    width: theme.spacing(8),
-    height: theme.spacing(8),
+  small: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   },
   paper: {
     padding: theme.spacing(3),
@@ -32,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 const FamilyCard = ({
   id,
+  avatar,
   firstName,
   lastName,
   age,
@@ -75,7 +75,7 @@ const FamilyCard = ({
           <Grid item xs={12} sm={6}>
             <Avatar
               alt="Member Avatar"
-              src={grandpa}
+              src={`assets/${avatar}`}
               className={classes.small}
               id="family-avatar"
             />

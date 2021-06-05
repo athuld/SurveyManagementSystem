@@ -30,6 +30,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  avatar: {
+    type: String,
+    required: true,
+  },
+  surveys: {
+    type: Number,
+    default: 0,
+  },
   members: [
     {
       firstName: {
@@ -51,6 +59,14 @@ const userSchema = new mongoose.Schema({
       age: {
         type: Number,
         required: true,
+      },
+      avatar: {
+        type: String,
+        required: true,
+      },
+      surveys: {
+        type: Number,
+        default: 0,
       },
     },
   ],

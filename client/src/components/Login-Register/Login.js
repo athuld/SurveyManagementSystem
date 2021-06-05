@@ -19,7 +19,6 @@ const Login = ({ setShowAlertModal, setIsLoggedIn }) => {
 
   // Submit Handler
   const handleSubmit = async (e) => {
-    console.log(login);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -43,7 +42,6 @@ const Login = ({ setShowAlertModal, setIsLoggedIn }) => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    console.log(login);
   };
 
   // Render

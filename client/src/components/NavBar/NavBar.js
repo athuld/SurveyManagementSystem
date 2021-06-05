@@ -1,7 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./NavBar.scss";
+import Cookie from "js-cookie";
 
 const NavBar = ({ user }) => {
+  const history = useHistory();
+
+  const handleLogout = () => {
+    Cookie.remove("accessToken");
+    history.push("/");
+  };
+
   if (!user) {
     return (
       <nav className="navbar">
@@ -19,9 +27,9 @@ const NavBar = ({ user }) => {
             <a href="# ">About</a>
           </li>
         </ul>
-        <div className="user-btn">
+        <button className="user-btn">
           <Link to="/login">Login</Link>
-        </div>
+        </button>
       </nav>
     );
   }
@@ -41,9 +49,9 @@ const NavBar = ({ user }) => {
           <a href="# ">Complaints</a>
         </li>
       </ul>
-      <div className="user-btn">
-        <Link to="/">Logout</Link>
-      </div>
+      <button className="user-btn" onClick={handleLogout}>
+        Logout
+      </button>
     </nav>
   );
 };
