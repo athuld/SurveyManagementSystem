@@ -92,6 +92,8 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body.data;
+  let isAdmin = false;
+  if (email === "admin@survey.com") isAdmin = true;
 
   // Check if user exist //
   const user = await User.findOne({ email: email });
@@ -104,7 +106,7 @@ router.post("/login", async (req, res) => {
 
   // JWT //
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-  res.json({ message: "User logged in", token: token });
+  res.json({ message: "User logged in", isAdmin: isAdmin, token: token });
 });
 
 /*************************************************************************************/

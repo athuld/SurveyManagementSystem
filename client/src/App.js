@@ -6,6 +6,9 @@ import Login from "./components/Login-Register/Login";
 import Register from "./components/Login-Register/Register";
 import AlertModal from "./components/AlertModal/Alert";
 import UserHome from "./components/User-Home/UserHome";
+import AdminHome from "./components/Admin/Admin-Home/AdminHome";
+import SurveyHome from "./components/Admin/Survey/SurveyHome";
+import NewSurvey from "./components/Admin/Survey/NewSurvey";
 
 function App() {
   const location = useLocation();
@@ -44,6 +47,9 @@ function App() {
             />
           </Route>
           <Route path="/user" component={UserHome} />
+          <Route path="/admin" component={AdminHome} exact />
+          <Route path="/admin/surveys" component={SurveyHome} exact />
+          <Route path="/admin/surveys/new" component={NewSurvey} />
         </Switch>
       </AnimatePresence>
     </div>

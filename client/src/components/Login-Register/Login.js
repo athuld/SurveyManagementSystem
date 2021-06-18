@@ -27,7 +27,9 @@ const Login = ({ setShowAlertModal, setIsLoggedIn }) => {
       );
       if (response.data.token) {
         Cookie.set("accessToken", response.data.token);
-        history.push("/user");
+        if (response.data.isAdmin) {
+          history.push("/admin");
+        } else history.push("/user");
       }
     } catch (error) {
       console.log(error);

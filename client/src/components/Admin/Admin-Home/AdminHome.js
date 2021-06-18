@@ -1,0 +1,133 @@
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Home,
+  Assignment,
+  ConfirmationNumber,
+  Feedback,
+  People,
+} from "@material-ui/icons";
+import {
+  Button,
+  Drawer,
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  List,
+  Typography,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
+import "./Admin.scss";
+import { useHistory } from "react-router-dom";
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexGrow: 1,
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  title: {
+    flexGrow: 1,
+    marginLeft: theme.spacing(2),
+  },
+  button: {
+    marginRight: theme.spacing(2),
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(3),
+  },
+}));
+
+const AdminHome = () => {
+  document.title = "Admin";
+  const classes = useStyles();
+  const history = useHistory();
+
+  // Nav Menu Items
+  const navItems = [
+    {
+      text: "Home",
+      icon: <Home />,
+      onClick: () => history.push("/admin"),
+    },
+    {
+      text: "Users",
+      icon: <People />,
+      onClick: () => history.push("/admin/users"),
+    },
+    {
+      text: "Surveys",
+      icon: <Assignment />,
+      onClick: () => history.push("/admin/surveys"),
+    },
+    {
+      text: "Complaints",
+      icon: <ConfirmationNumber />,
+      onClick: () => history.push("/admin/complaints"),
+    },
+    {
+      text: "Feedbacks",
+      icon: <Feedback />,
+      onClick: () => history.push("/admin/feedbacks"),
+    },
+  ];
+
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar position="fixed" id="app-bar" className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h5" className={classes.title}>
+            Admin Panel
+          </Typography>
+          <Button color="inherit" className={classes.button}>
+            Logout
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        id="drawer"
+        className={classes.drawer}
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+        anchor="left"
+      >
+        <div className={classes.toolbar} />
+        <List>
+          {navItems.map((item, index) => {
+            const { text, icon, onClick } = item;
+            return (
+              <ListItem button key={text} onClick={onClick} key={index}>
+                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            );
+          })}
+          <Divider />
+        </List>
+      </Drawer>
+      <div className={classes.content}></div>
+    </div>
+  );
+};
+export default AdminHome;

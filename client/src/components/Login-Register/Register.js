@@ -59,6 +59,7 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+    console.log(register);
   };
 
   // Render

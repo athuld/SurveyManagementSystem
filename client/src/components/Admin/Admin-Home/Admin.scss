@@ -1,0 +1,11 @@
+@import "../../../main.scss";
+
+#app-bar {
+    background-color: $color-dark;
+}
+#title {
+    margin: 0 auto;
+}
+#drawer {
+    background-color: $color-light !important;
+}

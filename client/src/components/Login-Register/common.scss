@@ -14,7 +14,8 @@
 
 .form-container {
     transition-timing-function: ease-in;
-    background-image:linear-gradient(#DDDD,$color-seconday);
+    // background-image:linear-gradient(#DDDD,$color-seconday);
+    background-color: #edf2f4;
     border-radius: 0.5em;
     width: 33rem;
     padding: 3em;
@@ -62,8 +63,8 @@
         padding: 0.92em 9.6em;
     }
 }
-#date{
-    margin-top:-.4em;
+#date {
+    margin-top: -0.4em;
 }
 
 #login-form-container {

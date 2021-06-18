@@ -1,0 +1,95 @@
+@import "../../../main.scss";
+
+$color-btn: #65d2aa;
+body {
+    background-color: #fafafa;
+}
+.survey {
+    position: fixed;
+    margin-left: 17rem;
+}
+
+.new-btn {
+    margin-top: 1rem;
+    display: inline-block;
+    padding: 0.7em 1em;
+    border: 2px solid $color-btn;
+    color: $color-btn;
+    border-radius: 0.5em;
+    font-size: 1em;
+    font-weight: 600;
+    background-color: #eafff7;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $color-btn;
+        color: #fafafa;
+    }
+}
+
+.survey-list {
+    margin-left: 13rem;
+    margin-top: 2rem;
+    padding: 1.5rem 5rem;
+    background-color: $color-light;
+    border-radius: 0.5em;
+}
+
+.survey-nav {
+    position: static;
+    margin: 1rem;
+    letter-spacing: 3px;
+    padding: 1em;
+    background-color: #fffefe;
+    border-radius: 0.5rem;
+    h3 {
+        margin-left: 3rem;
+        color: $color-dark;
+    }
+}
+.nav-items {
+    display: flex;
+    justify-content: space-between;
+}
+
+#cancel-btn {
+    margin-right: 1em;
+    background-color: #ff989e;
+}
+#save-btn {
+    margin-right: 3em;
+    background-color: #90caf9;
+}
+
+.survey-block {
+    background-color: #fffefe;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    padding: 1em;
+    max-width: 50vw;
+    border-radius: 0.5em;
+}
+
+#title {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+#description {
+    margin-top: -1.2rem;
+    font-size: 0.8rem;
+}
+#icon-option {
+    margin-top: 0.2em;
+    margin-right: 0.3em;
+}
+
+.add-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
