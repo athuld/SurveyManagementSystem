@@ -22,6 +22,7 @@ import {
 } from "@material-ui/core";
 import "./Admin.scss";
 import { useHistory } from "react-router-dom";
+import Cookie from "js-cookie";
 
 const drawerWidth = 240;
 
@@ -90,6 +91,11 @@ const AdminHome = () => {
     },
   ];
 
+  const handleLogout = () => {
+    Cookie.remove("accessToken");
+    history.push("/");
+  };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -98,7 +104,11 @@ const AdminHome = () => {
           <Typography variant="h5" className={classes.title}>
             Admin Panel
           </Typography>
-          <Button color="inherit" className={classes.button}>
+          <Button
+            color="inherit"
+            className={classes.button}
+            onClick={handleLogout}
+          >
             Logout
           </Button>
         </Toolbar>
@@ -117,7 +127,7 @@ const AdminHome = () => {
           {navItems.map((item, index) => {
             const { text, icon, onClick } = item;
             return (
-              <ListItem button key={text} onClick={onClick} key={index}>
+              <ListItem button onClick={onClick} key={index}>
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>

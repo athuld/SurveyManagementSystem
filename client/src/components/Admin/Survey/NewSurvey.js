@@ -15,17 +15,17 @@ const NewSurvey = () => {
 
   const [header, setHeader] = useState({});
   const [questions, setQuestions] = useState([
-    { question: "", type: "radio", options: [{ option: "" }], required: true },
+    { question: "", type: "radio", options: [{ option: "" }], required: true }
   ]);
 
   const headers = {
-    autherisation: `Bearer ${Cookie.get("accessToken")}`,
+    autherisation: `Bearer ${Cookie.get("accessToken")}`
   };
 
-  const handleHeaderChange = (e) => {
-    setHeader((prev) => ({
+  const handleHeaderChange = e => {
+    setHeader(prev => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   };
 
@@ -35,12 +35,12 @@ const NewSurvey = () => {
       question: "",
       type: "radio",
       options: [{ option: "" }],
-      required: true,
+      required: true
     });
     setQuestions(values);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const questionsData = { questions: questions };
     const data = { ...header, ...questionsData };
@@ -50,6 +50,7 @@ const NewSurvey = () => {
         { data: data },
         { headers }
       );
+      console.log(response.data.message);
       history.push("/admin/surveys");
     } catch (error) {
       console.error(error);
@@ -58,13 +59,14 @@ const NewSurvey = () => {
 
   return (
     <main className="new-survey">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete="off">
         <div className="survey-nav">
           <nav className="nav-items">
             <h3>New Survey</h3>
             <div>
               <Button
                 variant="contained"
+                onClick={() => history.push("/admin/surveys")}
                 startIcon={<Cancel />}
                 id="cancel-btn"
               >

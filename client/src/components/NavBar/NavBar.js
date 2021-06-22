@@ -43,7 +43,7 @@ const NavBar = ({ user }) => {
           <Link to="/user">Home</Link>
         </li>
         <li>
-          <a href="# ">Surveys</a>
+          <Link to="/user/surveys">Surveys</Link>
         </li>
         <li>
           <a href="# ">Complaints</a>

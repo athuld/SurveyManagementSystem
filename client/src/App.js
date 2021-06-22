@@ -9,12 +9,15 @@ import UserHome from "./components/User-Home/UserHome";
 import AdminHome from "./components/Admin/Admin-Home/AdminHome";
 import SurveyHome from "./components/Admin/Survey/SurveyHome";
 import NewSurvey from "./components/Admin/Survey/NewSurvey";
+import SurveyTab from "./components/User-Survey/SurveyTab";
+import SurveyRespond from "./components/User-Survey/SurveyRespond";
 
 function App() {
   const location = useLocation();
   const [showAlertModal, setShowAlertModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
@@ -46,7 +49,13 @@ function App() {
               setIsRegistered={setIsRegistered}
             />
           </Route>
-          <Route path="/user" component={UserHome} />
+          <Route path="/user" component={UserHome} exact />
+          <Route path="/user/surveys" exact>
+            <SurveyTab isOpen={isOpen} setIsOpen={setIsOpen} />
+          </Route>
+          <Route path="/user/surveys/respond/:surveyId" exact>
+            <SurveyRespond setIsOpen={setIsOpen} />
+          </Route>
           <Route path="/admin" component={AdminHome} exact />
           <Route path="/admin/surveys" component={SurveyHome} exact />
           <Route path="/admin/surveys/new" component={NewSurvey} />

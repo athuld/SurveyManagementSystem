@@ -1,0 +1,57 @@
+@import "../../main.scss";
+
+.survey-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1em;
+  color: $color-dark;
+}
+
+.survey-card {
+  background-color: #d8f4f9;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  padding: 1em;
+  max-width: 55vw;
+  border-radius: 0.5em;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.survey-img {
+  width: 3.5em;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#respond-btn {
+  background-color: #befab4;
+}
+
+.title {
+  font-size: 1.7rem;
+  font-weight: 400;
+  color: $color-dark;
+}
+
+.description {
+  font-size: 1rem;
+  color: $color-primary;
+  text-align: center;
+}

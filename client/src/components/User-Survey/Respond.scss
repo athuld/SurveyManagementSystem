@@ -1,0 +1,78 @@
+@import "../../main.scss";
+
+.response-block {
+    background-color: #d8f4f9;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    padding: 1em;
+    max-width: 50vw;
+    border-radius: 0.5em;
+    position: relative;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.header {
+    margin-top: 2rem;
+    &::after {
+        content: "";
+        position: absolute;
+        width: 50vw;
+        height: 8px;
+        display: block;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: $color-primary;
+        border-radius: 0.5rem 0.5rem 0 0;
+    }
+}
+
+.survey-title {
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.survey-description {
+    margin-left: 1em;
+    margin-bottom: 0.5em;
+    font-size: 1rem;
+    font-weight: 300;
+}
+.survey-question-false {
+    margin-left: 1em;
+    margin-bottom: 0.5em;
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+.survey-question-true {
+    margin-left: 1em;
+    margin-bottom: 0.5em;
+    font-size: 1.1rem;
+    font-weight: 300;
+    &::after {
+        content: " *";
+        color: red;
+    }
+}
+
+#survey-option {
+    margin-left: 0.5em;
+}
+
+.survey-submit {
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 5em;
+    max-width: 50vw;
+}
+
+#survey-submit-btn {
+    background-color: $color-primary;
+    padding: 0.5em 2em;
+}

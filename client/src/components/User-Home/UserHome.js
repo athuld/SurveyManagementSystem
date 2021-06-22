@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import Cookie from "js-cookie";
 import axios from "axios";
 import "./UserHome.scss";
-import {
-  makeStyles,
-  Backdrop,
-  CircularProgress,
-  Paper,
-  Grid,
-  Avatar,
-} from "@material-ui/core";
+import { makeStyles, Paper, Grid, Avatar } from "@material-ui/core";
 import {
   Chart,
   BarSeries,
@@ -21,6 +14,7 @@ import { Animation } from "@devexpress/dx-react-chart";
 import NavBar from "../NavBar/NavBar";
 import FamilyCard from "./FamilyCard";
 import FamilyAddBtn from "./FamilyAddBtn";
+import BackdropLoading from "../Loading/BackdropLoading";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -73,22 +67,13 @@ const UserHome = () => {
 
   useEffect(() => {
     getUserDetails();
-  }, [memberNum]);
+  }, [memberNum]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (
     Object.keys(userDetails).length === 0 &&
     userDetails.constructor === Object
   ) {
-    return (
-      <Backdrop open>
-        <div style={{ position: "relative" }}>
-          <span style={{ position: "absolute", top: ".5rem", left: "3rem" }}>
-            Loading....
-          </span>
-          <CircularProgress />
-        </div>
-      </Backdrop>
-    );
+    return <BackdropLoading />;
   }
 
   return (
