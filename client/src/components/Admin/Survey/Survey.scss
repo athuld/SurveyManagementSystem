@@ -10,7 +10,6 @@ body {
 }
 
 .new-btn {
-    margin-top: 1rem;
     display: inline-block;
     padding: 0.7em 1em;
     border: 2px solid $color-btn;
@@ -92,4 +91,33 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#table-container {
+    margin-top: 1rem;
+    border-radius: 1em;
+}
+
+#table-head {
+    background-color: $color-primary;
+}
+
+#table-cell {
+    color: #fafafa;
+    font-weight: 700;
+}
+
+#delete-btn {
+    background-color: #ff7a82;
+    color: $color-dark;
+}
+.header-bar {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#survey-search-bar {
+    width: 30vw;
 }

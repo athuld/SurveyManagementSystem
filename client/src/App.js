@@ -18,6 +18,10 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [isRegistered, setIsRegistered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [notification, setNotification] = useState({
+    severity: "",
+    message: "",
+  });
 
   return (
     <div>
@@ -57,8 +61,20 @@ function App() {
             <SurveyRespond setIsOpen={setIsOpen} />
           </Route>
           <Route path="/admin" component={AdminHome} exact />
-          <Route path="/admin/surveys" component={SurveyHome} exact />
-          <Route path="/admin/surveys/new" component={NewSurvey} />
+          <Route path="/admin/surveys" exact>
+            <SurveyHome
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              notification={notification}
+              setNotification={setNotification}
+            />
+          </Route>
+          <Route path="/admin/surveys/new">
+            <NewSurvey
+              setIsOpen={setIsOpen}
+              setNotification={setNotification}
+            />
+          </Route>
         </Switch>
       </AnimatePresence>
     </div>

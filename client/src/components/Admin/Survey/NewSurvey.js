@@ -7,7 +7,7 @@ import QuestionCard from "./QuestionCard";
 import axios from "axios";
 import Cookie from "js-cookie";
 
-const NewSurvey = () => {
+const NewSurvey = ({ setIsOpen, setNotification }) => {
   document.body.style.backgroundColor = "#D8F4F9";
   document.title = "New Survey";
 
@@ -15,17 +15,17 @@ const NewSurvey = () => {
 
   const [header, setHeader] = useState({});
   const [questions, setQuestions] = useState([
-    { question: "", type: "radio", options: [{ option: "" }], required: true }
+    { question: "", type: "radio", options: [{ option: "" }], required: true },
   ]);
 
   const headers = {
-    autherisation: `Bearer ${Cookie.get("accessToken")}`
+    autherisation: `Bearer ${Cookie.get("accessToken")}`,
   };
 
-  const handleHeaderChange = e => {
-    setHeader(prev => ({
+  const handleHeaderChange = (e) => {
+    setHeader((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -35,12 +35,12 @@ const NewSurvey = () => {
       question: "",
       type: "radio",
       options: [{ option: "" }],
-      required: true
+      required: true,
     });
     setQuestions(values);
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const questionsData = { questions: questions };
     const data = { ...header, ...questionsData };
@@ -51,6 +51,11 @@ const NewSurvey = () => {
         { headers }
       );
       console.log(response.data.message);
+      setNotification({
+        severity: "success",
+        message: "Survey has been created successfully!",
+      });
+      setIsOpen(true);
       history.push("/admin/surveys");
     } catch (error) {
       console.error(error);

@@ -24,6 +24,25 @@ router.post("/add", verify, async (req, res) => {
 });
 
 /**
+ * DELETE A SURVEY
+ *
+ * Can be used to delete a survey
+ *
+ * ROUTE: PRIVATE
+ * URL = /api/admin/survey/:surveyId
+ */
+
+router.delete("/:surveyId", verify, async (req, res) => {
+  try {
+    const survey = await Surveys.findByIdAndRemove(req.params.surveyId);
+    await Response.deleteMany({ surveyId: req.params.surveyId });
+    res.status(200).json({ id: survey._id });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+/**
  * RETURN ALL SURVEYS
  *
  * Can be used to get all the surveys
@@ -34,7 +53,7 @@ router.post("/add", verify, async (req, res) => {
 
 router.get("/fetch/", verify, async (req, res) => {
   try {
-    const surveyDetails = await Surveys.find({});
+    const surveyDetails = await Surveys.find({}).sort({ createdAt: -1 });
     res.json(surveyDetails);
   } catch (err) {
     res.status(400).json(err);
@@ -71,10 +90,30 @@ router.get("/:surveyId", async (req, res) => {
 router.post("/response", async (req, res) => {
   try {
     const responseData = new Response(req.body.data);
-    const response = await responseData.save();
+    await responseData.save();
     res.status(200).json({ message: "response recorded" });
   } catch (err) {
     res.json(err);
+  }
+});
+
+/**
+ * GET NO OF RESPONSES
+ *
+ * Can be used to get the number of responses for a particular survey
+ *
+ * ROUTE : PRIVATE
+ * URL = /api/admin/survey/responseCount/:surveyId
+ */
+
+router.get("/responseCount/:surveyId", verify, async (req, res) => {
+  try {
+    const count = await Response.countDocuments({
+      surveyId: req.params.surveyId,
+    });
+    res.status(200).json(count);
+  } catch (error) {
+    res.send(error);
   }
 });
 
