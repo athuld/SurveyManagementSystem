@@ -11,6 +11,7 @@ import SurveyHome from "./components/Admin/Survey/SurveyHome";
 import NewSurvey from "./components/Admin/Survey/NewSurvey";
 import SurveyTab from "./components/User-Survey/SurveyTab";
 import SurveyRespond from "./components/User-Survey/SurveyRespond";
+import Users from "./components/Admin/Users/Users";
 
 function App() {
   const location = useLocation();
@@ -61,6 +62,14 @@ function App() {
             <SurveyRespond setIsOpen={setIsOpen} />
           </Route>
           <Route path="/admin" component={AdminHome} exact />
+          <Route path="/admin/users" exact>
+            <Users
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              notification={notification}
+              setNotification={setNotification}
+            />
+          </Route>
           <Route path="/admin/surveys" exact>
             <SurveyHome
               isOpen={isOpen}

@@ -21,6 +21,50 @@ router.get("/", verify, async (req, res) => {
 /*********************************************************************/
 
 /**
+ * FETCH ALL USER DETAILS
+ *
+ * returns all the users for admin
+ *
+ * ROUTE: PRIVATE
+ * URL: /api/user/fetch
+ *
+ */
+
+router.get("/fetch", verify, async (req, res) => {
+  try {
+    const userDetails = await User.find({
+      email: { $not: { $eq: "admin@survey.com" } },
+    }).select("-password");
+    res.json(userDetails);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+/***********************************************************************/
+
+/**
+ * DELETE A USER
+ *
+ * delete a user
+ *
+ * ROUTE: PRIVATE
+ * URL: /api/user/:userId
+ *
+ */
+
+router.delete("/:userId", verify, async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.userId);
+    res.status(200).json({ id: user._id });
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+/*********************************************************************/
+
+/**
  * ADD MEMBERS
  *
  * Can be used to add new subdocument to the subdocument

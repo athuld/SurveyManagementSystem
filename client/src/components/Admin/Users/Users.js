@@ -1,7 +1,7 @@
+import React from "react";
 import AdminHome from "../Admin-Home/AdminHome";
-import "./Survey.scss";
+import "../Survey/Survey.scss";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   Table,
@@ -14,7 +14,9 @@ import {
   Button,
   TablePagination,
   TableFooter,
+  Avatar,
 } from "@material-ui/core";
+import { PeopleAltTwoTone } from "@material-ui/icons";
 import SearchBar from "material-ui-search-bar";
 import Cookie from "js-cookie";
 import axios from "axios";
@@ -35,25 +37,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
-  document.body.style.backgroundColor = "#fafafa";
-  const history = useHistory();
-
+const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
   const classes = useStyles();
-  const [surveys, setSurveys] = useState([{}]);
+  const [users, setUsers] = useState([{}]);
   const [searchData, setSearchData] = useState([]);
   const [deletedId, setDeletedId] = useState({ id: "" });
   const [open, setOpen] = useState(false);
   const [dialogDetails, setDialogDetails] = useState({
-    item: "survey",
+    item: "user",
     id: "",
     description: "",
     title: "",
   });
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(6);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, surveys.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage);
   const [searched, setSearched] = useState("");
 
   const headers = {
@@ -67,9 +66,10 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
   const requestSearch = (searchedVal) => {
     const originalRows = [...searchData];
     const filteredRows = originalRows.filter((row) => {
-      return row.title.toLowerCase().includes(searchedVal.toLowerCase());
+      const fullName = `${row.firstName} ${row.lastName}`;
+      return fullName.toLowerCase().includes(searchedVal.toLowerCase());
     });
-    setSurveys(filteredRows);
+    setUsers(filteredRows);
   };
 
   const cancelSearch = () => {
@@ -90,41 +90,30 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  /*************************************************************** */
-
-  /**
-   * Getting all the surveys and responses
-   */
-
-  const getSurveys = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:5001/api/admin/survey/fetch",
-        { headers }
-      );
-      const values = [...res.data];
-      for (let i = 0; i < values.length; i++) {
-        const res = await axios.get(
-          `http://localhost:5001/api/admin/survey/responseCount/${values[i]._id}`,
-          { headers }
-        );
-        values[i].responses = res.data;
-      }
-
-      setSurveys(values);
-      setSearchData(values);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   /************************************************************************ */
+
+  /**
+   * Get all the users
+   */
+
+  const getUsers = async () => {
+    try {
+      const res = await axios.get("http://localhost:5001/api/user/fetch", {
+        headers,
+      });
+      setUsers(res.data);
+      setSearchData(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   /**
    * useEffect hook to set the survey details at start
    */
   useEffect(() => {
-    getSurveys();
+    getUsers();
   }, [deletedId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   /************************************************************************* */
@@ -151,11 +140,9 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
   const handleDelete = async (_id) => {
     setOpen(false);
     try {
-      const res = await axios.delete(
-        `http://localhost:5001/api/admin/survey/${_id}`,
-        { headers }
-      );
-      console.log(res);
+      const res = await axios.delete(`http://localhost:5001/api/user/${_id}`, {
+        headers,
+      });
       setDeletedId({
         id: res.data.id,
       });
@@ -164,7 +151,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
     }
     setNotification({
       severity: "error",
-      message: "Survey has been deleted",
+      message: "User has been deleted",
     });
     setIsOpen(true);
   };
@@ -186,12 +173,13 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
         />
         <main className="survey">
           <div className="header-bar">
-            <button
-              className="new-btn"
-              onClick={() => history.push("/admin/surveys/new")}
-            >
-              New Survey
-            </button>
+            <div className="all-user-container">
+              <Avatar id="all-user-avatar">
+                <PeopleAltTwoTone />
+              </Avatar>
+              <span>All Users</span>
+            </div>
+
             <SearchBar
               id="survey-search-bar"
               value={searched}
@@ -211,13 +199,19 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
                     Sl.no
                   </TableCell>
                   <TableCell id="table-cell" align="left">
-                    Title
+                    User
+                  </TableCell>
+                  <TableCell id="table-cell" align="left">
+                    Gender
+                  </TableCell>
+                  <TableCell id="table-cell" align="left">
+                    Email
                   </TableCell>
                   <TableCell id="table-cell" align="center">
-                    Created Date
+                    Age
                   </TableCell>
                   <TableCell id="table-cell" align="center">
-                    Responses
+                    No: of members
                   </TableCell>
                   <TableCell id="table-cell" align="center">
                     Actions
@@ -225,38 +219,32 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {surveys
+                {users
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((survey, idx) => (
-                    <TableRow key={survey._id}>
+                  .map((user, idx) => (
+                    <TableRow key={user._id}>
                       <TableCell align="center" component="th" scope="row">
                         {idx + 1}
                       </TableCell>
                       <TableCell align="left">
-                        <span
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <h3>{survey.title} </h3>
-                          <span style={{ fontSize: ".8em" }}>
-                            {survey.description}
-                          </span>
-                        </span>
+                        {`${user.firstName} ${user.lastName}`}
                       </TableCell>
-                      <TableCell align="center">{survey.createdAt}</TableCell>
-                      <TableCell align="center">{survey.responses}</TableCell>
+                      <TableCell align="left">{user.gender}</TableCell>
+                      <TableCell align="left">{user.email}</TableCell>
+                      <TableCell align="center">{user.age}</TableCell>
                       <TableCell align="center">
-                        <Button color="primary" style={{ fontSize: ".8em" }}>
-                          Show
-                        </Button>{" "}
+                        {user.members.length}
+                      </TableCell>
+                      <TableCell align="center">
                         <Button
                           color="secondary"
-                          id={`${survey._id}-title`}
+                          id={`${user._id}-title`}
                           style={{ fontSize: ".8em" }}
                           onClick={() =>
                             handleOpen(
-                              survey._id,
-                              survey.title,
-                              survey.description
+                              user._id,
+                              `${user.firstName} ${user.lastName}`,
+                              user.email
                             )
                           }
                         >
@@ -266,7 +254,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
                     </TableRow>
                   ))}
                 {emptyRows > 0 && (
-                  <TableRow style={{ height: 52 * emptyRows }}>
+                  <TableRow style={{ height: 44 * emptyRows }}>
                     <TableCell colSpan={6} />
                   </TableRow>
                 )}
@@ -274,8 +262,8 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
               <TableFooter>
                 <TableRow>
                   <TablePagination
-                    rowsPerPageOptions={[4, 5, 6]}
-                    count={surveys.length}
+                    rowsPerPageOptions={[4, 5, 6, 8]}
+                    count={users.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}
@@ -297,4 +285,4 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
   );
 };
 
-export default SurveyHome;
+export default Users;

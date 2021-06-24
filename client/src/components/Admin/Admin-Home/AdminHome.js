@@ -127,13 +127,15 @@ const AdminHome = () => {
           {navItems.map((item, index) => {
             const { text, icon, onClick } = item;
             return (
-              <ListItem button onClick={onClick} key={index}>
-                <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
+              <div key={index}>
+                <ListItem button onClick={onClick} id="list-item">
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+                <Divider />
+              </div>
             );
           })}
-          <Divider />
         </List>
       </Drawer>
       <div className={classes.content}></div>

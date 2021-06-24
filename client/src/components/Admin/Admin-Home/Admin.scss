@@ -1,5 +1,9 @@
 @import "../../../main.scss";
 
+body {
+    background-color: $color-light;
+}
+
 #app-bar {
     background-color: $color-dark;
 }
@@ -8,4 +12,8 @@
 }
 #drawer {
     background-color: $color-light !important;
+}
+
+#list-item {
+    padding: 1.5em 0 1.5em 2em;
 }
