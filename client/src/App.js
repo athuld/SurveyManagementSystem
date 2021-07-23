@@ -12,6 +12,7 @@ import NewSurvey from "./components/Admin/Survey/NewSurvey";
 import SurveyTab from "./components/User-Survey/SurveyTab";
 import SurveyRespond from "./components/User-Survey/SurveyRespond";
 import Users from "./components/Admin/Users/Users";
+import Response from "./components/Admin/Response/Response";
 
 function App() {
   const location = useLocation();
@@ -83,6 +84,9 @@ function App() {
               setIsOpen={setIsOpen}
               setNotification={setNotification}
             />
+          </Route>
+          <Route path="/admin/surveys/response/:surveyId">
+            <Response />
           </Route>
         </Switch>
       </AnimatePresence>

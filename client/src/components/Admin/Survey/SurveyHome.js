@@ -245,7 +245,15 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
                       <TableCell align="center">{survey.createdAt}</TableCell>
                       <TableCell align="center">{survey.responses}</TableCell>
                       <TableCell align="center">
-                        <Button color="primary" style={{ fontSize: ".8em" }}>
+                        <Button
+                          color="primary"
+                          style={{ fontSize: ".8em" }}
+                          onClick={() =>
+                            history.push(
+                              `/admin/surveys/response/${survey._id}`
+                            )
+                          }
+                        >
                           Show
                         </Button>{" "}
                         <Button
