@@ -46,7 +46,7 @@ const NavBar = ({ user }) => {
           <Link to="/user/surveys">Surveys</Link>
         </li>
         <li>
-          <a href="# ">Complaints</a>
+          <Link to="/user/complaints">Complaints</Link>
         </li>
       </ul>
       <button className="user-btn" onClick={handleLogout}>

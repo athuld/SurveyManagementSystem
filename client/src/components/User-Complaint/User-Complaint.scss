@@ -1,0 +1,74 @@
+@import "../../main.scss";
+
+.complaint-container {
+    padding-top: 2em;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    margin-bottom: 2em;
+
+    h1{
+        color: $color-dark;
+    }
+}
+
+.complaint-main{
+    display:flex;
+    width:70vw;
+    margin-top: 3em;
+
+}
+
+.new-comp-container{
+    margin-left: 2em;
+    width:50vw;
+    border-radius: .5em;
+    padding: 2em;
+    background-color: hsl(136, 0, 92);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+    h2{
+        padding-bottom: 1em;
+    }
+}
+#select-container{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#comp-button{
+    margin-top: 1.5em;
+    background-color: $color-dark;
+    color: $color-light;
+}
+
+
+.circle-3 {
+    position: absolute;
+    overflow: hidden;
+    width: 40vw;
+    height: 40vw;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+}
+.circle-3::before {
+    content: "";
+    position: absolute;
+    transform: translate(40%, 40%);
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background-color: rgba(168, 218, 220, 0.4);
+}
+
+.circle-4 {
+    position: absolute;
+    overflow: hidden;
+    width: 18vw;
+    height: 18vw;
+    top:0;
+    border-radius: 50%;
+    background-color: rgba(168, 218, 220, 0.4);
+    z-index: -1;
+}
