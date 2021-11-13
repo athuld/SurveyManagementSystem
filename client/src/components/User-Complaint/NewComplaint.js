@@ -8,15 +8,10 @@ import {
   FormControl,
   Button,
 } from "@material-ui/core";
-import Cookie from "js-cookie";
 import axios from "axios";
 
-const NewComplaint = () => {
-  const [complaint, setComplaint] = useState({ complaintBody: {}});
-
-  const headers = {
-    autherisation: `Bearer ${Cookie.get("accessToken")}`,
-  };
+const NewComplaint = ({ headers }) => {
+  const [complaint, setComplaint] = useState({ complaintBody: {} });
 
   const handleChange = (e) => {
     setComplaint((prev) => ({

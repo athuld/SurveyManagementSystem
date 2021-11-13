@@ -6,6 +6,7 @@ const userRoute = require("./api/user");
 const surveyRoute = require("./api/survey");
 const responseRoute = require("./api/reponse");
 const complaintRoute = require("./api/complaint");
+const complaintAdminRoute = require("./api/complaint");
 const cors = require("cors");
 const app = express();
 
@@ -36,3 +37,4 @@ app.use("/api/user/", userRoute);
 app.use("/api/admin/survey", surveyRoute);
 app.use("/api/survey/response", responseRoute);
 app.use("/api/user/complaint", complaintRoute);
+app.use("/api/admin/complaint", complaintAdminRoute);

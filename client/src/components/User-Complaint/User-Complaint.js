@@ -5,9 +5,14 @@ import { Tab, Tabs  } from "@material-ui/core";
 import NewComplaint from "./NewComplaint";
 import PendingComplaints from "./PendingComplaints";
 import ResolvedComplaints from "./ResolvedComplaints";
+import Cookie from "js-cookie";
 
 const UserComplaint = () => {
   const [tabValue, setTabValue] = useState(0);
+
+  const headers = {
+    autherisation: `Bearer ${Cookie.get("accessToken")}`,
+  };
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
@@ -32,9 +37,9 @@ const UserComplaint = () => {
               <Tab label="Resolved Complaints" />
             </Tabs>
           </div>
-          {tabValue === 0 && <NewComplaint />}
-          {tabValue === 1 && <PendingComplaints />}
-          {tabValue === 2 && <ResolvedComplaints />}
+          {tabValue === 0 && <NewComplaint headers={headers} />}
+          {tabValue === 1 && <PendingComplaints headers={headers} />}
+          {tabValue === 2 && <ResolvedComplaints headers={headers} />}
         </div>
       </div>
       <div className="circle-3"></div>
