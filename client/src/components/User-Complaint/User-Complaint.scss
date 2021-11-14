@@ -47,8 +47,8 @@
 .circle-3 {
     position: absolute;
     overflow: hidden;
-    width: 40vw;
-    height: 40vw;
+    width: 30vw;
+    height: 30vw;
     bottom: 0;
     right: 0;
     z-index: -1;
@@ -56,7 +56,7 @@
 .circle-3::before {
     content: "";
     position: absolute;
-    transform: translate(40%, 40%);
+    transform: translate(50%, 0);
     height: 100%;
     width: 100%;
     border-radius: 50%;

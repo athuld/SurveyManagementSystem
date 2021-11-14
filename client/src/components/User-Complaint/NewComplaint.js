@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 
-const NewComplaint = ({ headers }) => {
+const NewComplaint = ({ headers, setIsOpen, setTabValue }) => {
   const [complaint, setComplaint] = useState({ complaintBody: {} });
 
   const handleChange = (e) => {
@@ -32,6 +32,8 @@ const NewComplaint = ({ headers }) => {
         { headers }
       );
       console.log(res.data);
+      setIsOpen(true)
+      setTabValue(1)
     } catch (error) {
       console.error(error);
     }

@@ -1,13 +1,14 @@
 import { useState } from "react";
 import NavBar from "../NavBar/NavBar";
 import "./User-Complaint.scss";
-import { Tab, Tabs  } from "@material-ui/core";
+import { Tab, Tabs } from "@material-ui/core";
 import NewComplaint from "./NewComplaint";
 import PendingComplaints from "./PendingComplaints";
 import ResolvedComplaints from "./ResolvedComplaints";
 import Cookie from "js-cookie";
+import Notification from "../AlertModal/Notification"
 
-const UserComplaint = () => {
+const UserComplaint = ({ isOpen, setIsOpen }) => {
   const [tabValue, setTabValue] = useState(0);
 
   const headers = {
@@ -22,6 +23,12 @@ const UserComplaint = () => {
     <main>
       <NavBar user={true} />
       <div className="complaint-container">
+        <Notification
+          isOpen={isOpen}
+          severity="success"
+          setIsOpen={setIsOpen}
+          message="Complaint Submitted Successfully!"
+        />
         <h1>Complaints Hub</h1>
         <div className="complaint-main">
           <div>
@@ -32,12 +39,12 @@ const UserComplaint = () => {
               value={tabValue}
               onChange={handleChange}
             >
-              <Tab label="New Complaint"/>
+              <Tab label="New Complaint" />
               <Tab label="Pending Complaints" />
               <Tab label="Resolved Complaints" />
             </Tabs>
           </div>
-          {tabValue === 0 && <NewComplaint headers={headers} />}
+          {tabValue === 0 && <NewComplaint headers={headers} setIsOpen={setIsOpen} setTabValue={setTabValue} />}
           {tabValue === 1 && <PendingComplaints headers={headers} />}
           {tabValue === 2 && <ResolvedComplaints headers={headers} />}
         </div>

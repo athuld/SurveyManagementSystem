@@ -64,7 +64,7 @@ function App() {
             <SurveyRespond setIsOpen={setIsOpen} />
           </Route>
           <Route path="/user/complaints" exact>
-            <UserComplaint/>
+            <UserComplaint isOpen={isOpen} setIsOpen={setIsOpen}/>
           </Route>
           <Route path="/admin" component={AdminHome} exact />
           <Route path="/admin/users" exact>

@@ -67,7 +67,7 @@ router.get("/get/:statusType", verify, async (req, res) => {
     const statusComplaints = await Complaint.find({
       userId: userId,
       "complaintRes.status": req.params.statusType,
-    });
+    }).sort('-date');
     res.status(200).json(statusComplaints);
   } catch (err) {
     res.status(400).json(err);
