@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "../NavBar/NavBar";
 import "./User-Complaint.scss";
 import { Tab, Tabs } from "@material-ui/core";
@@ -6,14 +6,20 @@ import NewComplaint from "./NewComplaint";
 import PendingComplaints from "./PendingComplaints";
 import ResolvedComplaints from "./ResolvedComplaints";
 import Cookie from "js-cookie";
-import Notification from "../AlertModal/Notification"
+import Notification from "../AlertModal/Notification";
 
 const UserComplaint = ({ isOpen, setIsOpen }) => {
   const [tabValue, setTabValue] = useState(0);
+  const [mainHeading, setMainHeading] = useState("");
 
   const headers = {
     autherisation: `Bearer ${Cookie.get("accessToken")}`,
   };
+
+  useEffect(() => {
+    document.title = "Complaints";
+    setMainHeading("Complaints Hub");
+  }, []);
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
@@ -29,7 +35,7 @@ const UserComplaint = ({ isOpen, setIsOpen }) => {
           setIsOpen={setIsOpen}
           message="Complaint Submitted Successfully!"
         />
-        <h1>Complaints Hub</h1>
+        <h1>{mainHeading}</h1>
         <div className="complaint-main">
           <div>
             <Tabs
@@ -44,9 +50,26 @@ const UserComplaint = ({ isOpen, setIsOpen }) => {
               <Tab label="Resolved Complaints" />
             </Tabs>
           </div>
-          {tabValue === 0 && <NewComplaint headers={headers} setIsOpen={setIsOpen} setTabValue={setTabValue} />}
-          {tabValue === 1 && <PendingComplaints headers={headers} />}
-          {tabValue === 2 && <ResolvedComplaints headers={headers} />}
+          {tabValue === 0 && (
+            <NewComplaint
+              headers={headers}
+              setIsOpen={setIsOpen}
+              setTabValue={setTabValue}
+              setMainHeading={setMainHeading}
+            />
+          )}
+          {tabValue === 1 && (
+            <PendingComplaints
+              headers={headers}
+              setMainHeading={setMainHeading}
+            />
+          )}
+          {tabValue === 2 && (
+            <ResolvedComplaints
+              headers={headers}
+              setMainHeading={setMainHeading}
+            />
+          )}
         </div>
       </div>
       <div className="circle-3"></div>

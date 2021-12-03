@@ -55,7 +55,7 @@ const FamilyCard = ({
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:5001/api/user/members/delete/${id}`,
+        `${process.env.REACT_APP_URL}/api/user/members/delete/${id}`,
         { headers }
       );
       setMemberNum(response.data.members.length);

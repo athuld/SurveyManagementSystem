@@ -1,0 +1,230 @@
+@import "../../../main.scss";
+
+$color-btn: #65d2aa;
+body {
+  background-color: #fafafa;
+}
+.complaint {
+  position: fixed;
+  margin-left: 17rem;
+}
+
+.new-btn {
+  display: inline-block;
+  padding: 0.7em 1em;
+  border: 2px solid $color-btn;
+  color: $color-btn;
+  border-radius: 0.5em;
+  font-size: 1em;
+  font-weight: 600;
+  background-color: #eafff7;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-btn;
+    color: #fafafa;
+  }
+}
+
+.complaint-list {
+  margin-left: 13rem;
+  margin-top: 2rem;
+  padding: 1.5rem 5rem;
+  background-color: $color-light;
+  border-radius: 0.5em;
+}
+
+.complaint-nav {
+  position: static;
+  margin: 1rem;
+  letter-spacing: 3px;
+  padding: 1em;
+  background-color: #fffefe;
+  border-radius: 0.5rem;
+  h3 {
+    margin-left: 3rem;
+    color: $color-dark;
+  }
+}
+.nav-items {
+  display: flex;
+  justify-content: space-between;
+}
+
+#cancel-btn {
+  margin-right: 1em;
+  background-color: #ff989e;
+}
+#save-btn {
+  margin-right: 3em;
+  background-color: #90caf9;
+}
+
+.complaint-block {
+  background-color: #fffefe;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  padding: 1em;
+  max-width: 50vw;
+  border-radius: 0.5em;
+}
+
+#title {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+#description {
+  margin-top: -1.2rem;
+  font-size: 0.8rem;
+}
+#icon-option {
+  margin-top: 0.2em;
+  margin-right: 0.3em;
+}
+
+.add-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#table-container {
+  margin-top: 1rem;
+  border-radius: 1em;
+}
+
+#table-head {
+  background-color: $color-primary;
+}
+
+#table-cell {
+  color: #fafafa;
+  font-weight: 700;
+}
+
+#delete-btn {
+  background-color: #ff7a82;
+  color: $color-dark;
+  font-weight: 600;
+}
+.header-bar {
+  margin-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#complaint-search-bar {
+  width: 30vw;
+}
+
+.all-complaint-container {
+  min-width: 17vw;
+  border-radius: 0.5em;
+  background-color: #fffefe;
+  padding: 0.5em 0 0.5em 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+
+  span {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: $color-dark;
+  }
+}
+
+#all-complaint-avatar {
+  background-color: $color-primary;
+}
+
+#Pending-chip {
+  background-color: $color-seconday;
+  color: $color-dark;
+}
+
+.complaint-title {
+  font-weight: 500;
+  font-size: 1.5em;
+  color: $color-dark;
+}
+.complaint-body {
+  min-width: 40vw;
+}
+
+// .complaint-info {
+//   display: flex;
+//   flex-direction: column;
+// }
+.header-info {
+  font-size: 0.8em;
+}
+.cmp-info {
+  padding: 0.5em;
+  border-radius: 0.5em;
+  color: $color-dark;
+  margin-bottom: 0.5em;
+  display: flex;
+  min-width: 7rem;
+}
+
+.cmp-clr {
+  background-color: rgba(168,218,220,0.3);
+}
+
+.resol-clr{
+    background-color: rgba(185,251,192,0.5);
+}
+
+.extra{
+    padding-bottom: 2em;
+}
+#cmp-status-icon {
+  font-size: 1.3em;
+}
+
+.tri-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5em;
+
+}
+.center-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+.resolve-submit {
+  background-color: $color-primary;
+  color: $color-light;
+  display: inline-block;
+  padding: 0.7em 1.5em;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.2em;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+  margin-right: 1em;
+}
+
+#resolve-dialog {
+  padding: 5em;
+}
+
+#Resolved-chip {
+  background-color: #b9fbc0;
+  color: $color-dark;
+}
+
+#view-btn {
+  background-color: $color-seconday;
+  color: $color-dark;
+  font-weight: 600;
+}

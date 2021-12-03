@@ -14,6 +14,7 @@ import SurveyRespond from "./components/User-Survey/SurveyRespond";
 import Users from "./components/Admin/Users/Users";
 import Response from "./components/Admin/Response/Response";
 import UserComplaint from "./components/User-Complaint/User-Complaint";
+import ComplaintAdmin from "./components/Admin/Complaints/ComplaintAdmin";
 
 function App() {
   const location = useLocation();
@@ -64,7 +65,7 @@ function App() {
             <SurveyRespond setIsOpen={setIsOpen} />
           </Route>
           <Route path="/user/complaints" exact>
-            <UserComplaint isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <UserComplaint isOpen={isOpen} setIsOpen={setIsOpen} />
           </Route>
           <Route path="/admin" component={AdminHome} exact />
           <Route path="/admin/users" exact>
@@ -91,6 +92,14 @@ function App() {
           </Route>
           <Route path="/admin/surveys/response/:surveyId">
             <Response />
+          </Route>
+          <Route path="/admin/complaints">
+            <ComplaintAdmin
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              notification={notification}
+              setNotification={setNotification}
+            />
           </Route>
         </Switch>
       </AnimatePresence>

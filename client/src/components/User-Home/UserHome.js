@@ -56,7 +56,7 @@ const UserHome = () => {
 
   const getUserDetails = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/api/user", {
+      const res = await axios.get(`${process.env.REACT_APP_URL}/api/user`, {
         headers,
       });
       setUserDetails(res.data);
@@ -66,6 +66,7 @@ const UserHome = () => {
   };
 
   useEffect(() => {
+    document.title="Home"
     getUserDetails();
   }, [memberNum]); // eslint-disable-line react-hooks/exhaustive-deps
 

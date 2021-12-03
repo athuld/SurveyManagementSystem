@@ -46,7 +46,7 @@ const NewSurvey = ({ setIsOpen, setNotification }) => {
     const data = { ...header, ...questionsData };
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/admin/survey/add",
+        `${process.env.REACT_APP_URL}/api/admin/survey/add`,
         { data: data },
         { headers }
       );

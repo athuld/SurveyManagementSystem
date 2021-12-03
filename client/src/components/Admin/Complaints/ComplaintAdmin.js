@@ -1,6 +1,4 @@
-import React from "react";
 import AdminHome from "../Admin-Home/AdminHome";
-import "../Survey/Survey.scss";
 import { makeStyles } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import {
@@ -15,14 +13,22 @@ import {
   TablePagination,
   TableFooter,
   Avatar,
+  Chip,
 } from "@material-ui/core";
-import { PeopleAltTwoTone } from "@material-ui/icons";
+import {
+  PeopleAltTwoTone,
+  Loop,
+  CheckCircleOutlineRounded,
+} from "@material-ui/icons";
 import SearchBar from "material-ui-search-bar";
 import Cookie from "js-cookie";
 import axios from "axios";
 import ConfirmDelete from "../../AlertModal/ConfirmDelete";
 import BackdropLoading from "../../Loading/BackdropLoading";
 import Notification from "../../AlertModal/Notification";
+import { format, parseISO } from "date-fns";
+import "./ComplaintAdmin.scss";
+import ResolveCard from "./ResolveCard";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -37,14 +43,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
+const ComplaintAdmin = ({
+  isOpen,
+  setIsOpen,
+  notification,
+  setNotification,
+}) => {
   const classes = useStyles();
-  const [users, setUsers] = useState([{}]);
+  const [complaints, setComplaints] = useState([{}]);
   const [searchData, setSearchData] = useState([]);
   const [deletedId, setDeletedId] = useState({ id: "" });
   const [open, setOpen] = useState(false);
   const [dialogDetails, setDialogDetails] = useState({
-    item: "user",
+    item: "complaint",
     id: "",
     description: "",
     title: "",
@@ -52,26 +63,28 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, complaints.length - page * rowsPerPage);
   const [searched, setSearched] = useState("");
+  const [resolveOpen, setResolveOpen] = useState(false);
+  const [resolveComplaint, setResolveComplaint] = useState("");
+  const [isResolved, setIsResolved] = useState(false);
 
   const headers = {
     autherisation: `Bearer ${Cookie.get("accessToken")}`,
   };
 
   /**
-   *  For searching the table of surveys
+   *  For searching the table of complaints
    */
 
   const requestSearch = (searchedVal) => {
     const originalRows = [...searchData];
     const filteredRows = originalRows.filter((row) => {
-      const fullName = `${row.firstName} ${row.lastName}`;
-      return fullName.toLowerCase().includes(searchedVal.toLowerCase());
+      const complaintName = `${row.complaintBody.subject}`;
+      return complaintName.toLowerCase().includes(searchedVal.toLowerCase());
     });
-    setUsers(filteredRows);
+    setComplaints(filteredRows);
   };
-
   const cancelSearch = () => {
     setSearched("");
     requestSearch(searched);
@@ -94,27 +107,31 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
   /************************************************************************ */
 
   /**
-   * Get all the users
+   * Get all the complaints
    */
 
-  const getUsers = async () => {
+  const getComplaints = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_URL}/api/user/fetch`, {
-        headers,
-      });
-      setUsers(res.data);
+      const res = await axios.get(
+        `${process.env.REACT_APP_URL}/api/admin/complaint/get`,
+        {
+          headers,
+        }
+      );
+      setComplaints(res.data);
       setSearchData(res.data);
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
   };
 
   /**
-   * useEffect hook to set the survey details at start
+   * useEffect hook to set the complaint details at start
    */
   useEffect(() => {
-    getUsers();
-  }, [deletedId]); // eslint-disable-line react-hooks/exhaustive-deps
+    getComplaints();
+  }, [deletedId, isResolved]); // eslint-disable-line react-hooks/exhaustive-deps
 
   /************************************************************************* */
 
@@ -123,11 +140,11 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
    */
 
   const handleOpen = (id, title, description) => {
-    setDialogDetails((prev) => ({
-      ...prev,
+    setDialogDetails(() => ({
       id: id,
       title: title,
       description: description,
+      item: "complaint",
     }));
     setOpen(true);
   };
@@ -135,14 +152,17 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
   /************************************************************************* */
 
   /**
-   *  handle delete of the specified survey
+   *  handle delete of the specified complaint
    */
   const handleDelete = async (_id) => {
     setOpen(false);
     try {
-      const res = await axios.delete(`${process.env.REACT_APP_URL}/api/user/${_id}`, {
-        headers,
-      });
+      const res = await axios.delete(
+        `${process.env.REACT_APP_URL}/api/admin/complaint/delete/${_id}`,
+        {
+          headers,
+        }
+      );
       setDeletedId({
         id: res.data.id,
       });
@@ -151,11 +171,19 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
     }
     setNotification({
       severity: "error",
-      message: "User has been deleted",
+      message: "Complaint has been deleted",
     });
     setIsOpen(true);
   };
-  /************************************************************************** */
+  /************************************************************************* */
+
+  /**
+   *  Open up resolve dialogue box
+   */
+  const handleResolveView = (complaint) => {
+    setResolveComplaint(complaint);
+    setResolveOpen(true);
+  };
 
   if (searchData.length === 0) {
     return <BackdropLoading />;
@@ -171,17 +199,17 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
           setIsOpen={setIsOpen}
           message={notification.message}
         />
-        <main className="survey">
+        <main className="complaint">
           <div className="header-bar">
-            <div className="all-user-container">
-              <Avatar id="all-user-avatar">
+            <div className="all-complaint-container">
+              <Avatar id="all-complaint-avatar">
                 <PeopleAltTwoTone />
               </Avatar>
-              <span>All Users</span>
+              <span>All complaints</span>
             </div>
 
             <SearchBar
-              id="survey-search-bar"
+              id="complaint-search-bar"
               value={searched}
               onChange={(searchVal) => requestSearch(searchVal)}
               onCancelSearch={() => cancelSearch()}
@@ -196,22 +224,19 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
               <TableHead id="table-head">
                 <TableRow>
                   <TableCell id="table-cell" align="center">
-                    Sl.no
+                    Date
                   </TableCell>
                   <TableCell id="table-cell" align="left">
-                    User
+                    Subject
                   </TableCell>
                   <TableCell id="table-cell" align="left">
-                    Gender
+                    Urgency
                   </TableCell>
                   <TableCell id="table-cell" align="left">
-                    Email
+                    Area
                   </TableCell>
                   <TableCell id="table-cell" align="center">
-                    Age
-                  </TableCell>
-                  <TableCell id="table-cell" align="center">
-                    No: of members
+                    Status
                   </TableCell>
                   <TableCell id="table-cell" align="center">
                     Actions
@@ -219,31 +244,64 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users
+                {complaints
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((user, idx) => (
-                    <TableRow key={user._id}>
-                      <TableCell align="center" component="th" scope="row">
-                        {idx + 1}
+                  .map((complaint) => (
+                    <TableRow key={complaint._id}>
+                      <TableCell align="center">
+                        {format(parseISO(complaint.date), "dd/MM/yyyy")}
                       </TableCell>
                       <TableCell align="left">
-                        {`${user.firstName} ${user.lastName}`}
+                        {complaint.complaintBody.subject}
                       </TableCell>
-                      <TableCell align="left">{user.gender}</TableCell>
-                      <TableCell align="left">{user.email}</TableCell>
-                      <TableCell align="center">{user.age}</TableCell>
+                      <TableCell align="left">
+                        {complaint.complaintBody.urgency}
+                      </TableCell>
+                      <TableCell align="left">
+                        {complaint.complaintBody.area}
+                      </TableCell>
                       <TableCell align="center">
-                        {user.members.length}
+                        {complaint.complaintRes.status === "Resolved" ? (
+                          <Chip
+                            icon={<CheckCircleOutlineRounded />}
+                            label="Resolved"
+                            size="small"
+                            id="Resolved-chip"
+                          />
+                        ) : (
+                          <Chip
+                            icon={<Loop />}
+                            label="Pending"
+                            size="small"
+                            id="Pending-chip"
+                          />
+                        )}
                       </TableCell>
                       <TableCell align="center">
                         <Button
-                         id="delete-btn"
+                          id="view-btn"
+                          variant="contained"
+                          color="primary"
+                          style={{ fontSize: ".2em" }}
+                          onClick={() => handleResolveView(complaint)}
+                        >
+                          View
+                        </Button>{" "}
+                        <Button
+                          variant="contained"
+                          // id={`${complaint._id}-title`}
+                          id="delete-btn"
                           style={{ fontSize: ".2em" }}
                           onClick={() =>
                             handleOpen(
-                              user._id,
-                              `${user.firstName} ${user.lastName}`,
-                              user.email
+                              complaint._id,
+                              complaint.complaintBody.subject,
+                              `${complaint.complaintBody.area} with ${
+                                complaint.complaintBody.urgency
+                              } urgency filed on ${format(
+                                parseISO(complaint.date),
+                                "dd/MM/yyyy"
+                              )}`
                             )
                           }
                         >
@@ -262,7 +320,7 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
                 <TableRow>
                   <TablePagination
                     rowsPerPageOptions={[4, 5, 6, 8]}
-                    count={users.length}
+                    count={complaints.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}
@@ -278,10 +336,18 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
             setOpen={setOpen}
             handleDelete={handleDelete}
           />
+          <ResolveCard
+            resolveComplaint={resolveComplaint}
+      isResolved={isResolved}
+            setIsResolved={setIsResolved}
+            resolveOpen={resolveOpen}
+            setResolveOpen={setResolveOpen}
+            headers={headers}
+          />
         </main>
       </div>
     </div>
   );
 };
 
-export default Users;
+export default ComplaintAdmin;

@@ -43,7 +43,7 @@ router.get("/get", verify, async (req, res) => {
     if (isAdmin) {
       const complaints = await Complaint.find();
       res.status(200).json(complaints);
-    } else res.status(404).json({ "message": "Unauthorised" })
+    } else res.status(404).json({ message: "Unauthorised" });
   } catch (err) {
     res.status(400).json(err);
   }
@@ -67,7 +67,7 @@ router.get("/get/:statusType", verify, async (req, res) => {
     const statusComplaints = await Complaint.find({
       userId: userId,
       "complaintRes.status": req.params.statusType,
-    }).sort('-date');
+    }).sort("-date");
     res.status(200).json(statusComplaints);
   } catch (err) {
     res.status(400).json(err);
@@ -79,7 +79,7 @@ router.get("/get/:statusType", verify, async (req, res) => {
 /**
  * UPDATE the complaint resolution body
  *
- * Admin route which help
+ * Admin route which help to add a resoltion to the complaint
  *
  * ROUTE: PRIVATE
  * URL: /api/admin/complaint/update/:complaintId
@@ -99,6 +99,27 @@ router.post("/update/:complaintId", verify, async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
+});
+
+/**
+ * DELETE a particular Complaint
+ *
+ * Admin route to delete a complaint
+ *
+ * ROUTE: PRIVATE
+ * URL: /api/admin/complaint/delete/:complaintId
+ * */
+router.delete("/delete/:complaintId", verify, async (req, res) => {
+  const user = await User.findOne({ _id: req.user._id });
+  const isAdmin = user.email === "admin@survey.com" ? true : false;
+  if (isAdmin) {
+    try {
+      const user = await Complaint.findByIdAndDelete(req.params.complaintId);
+      res.status(200).json({ id: user._id });
+    } catch (err) {
+      res.send(err);
+    }
+  } else res.status(404).json({ message: "Unauthorised access" });
 });
 
 /*******************************************************************/

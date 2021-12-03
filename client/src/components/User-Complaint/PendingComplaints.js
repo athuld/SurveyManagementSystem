@@ -5,13 +5,13 @@ import { Loop } from "@material-ui/icons";
 import RegularLoading from "../Loading/RegularLoading";
 import { format, parseISO } from "date-fns";
 
-const PendingComplaints = ({ headers }) => {
+const PendingComplaints = ({ headers, setMainHeading }) => {
   const [pendingData, setPendingData] = useState([]);
 
   const getPendingData = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5001/api/user/complaint/get/Pending",
+        `${process.env.REACT_APP_URL}/api/user/complaint/get/Pending`,
         { headers }
       );
       setPendingData(res.data);
@@ -21,21 +21,60 @@ const PendingComplaints = ({ headers }) => {
   };
 
   useEffect(() => {
+    setMainHeading("Pending Complaints");
     getPendingData();
   }, []);
 
   if (pendingData.length === 0) {
     return (
-    <div className="pending-container">
-      <span className="pending-head">Pending Complaints</span>
-      <RegularLoading />
-    </div>
-    )
+      <div className="pending-container">
+        <Grid container alignItems="center" className="pending-card-head">
+          <Grid item xs={12} sm={3} className="center-text">
+            <div className="content-info">
+              <span className="bold-text">Date</span>
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={5}>
+            <div className="content-info">
+              <span className="bold-text">Subject</span>
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={2} className="center-text">
+            <div className="content-info">
+              <span className="bold-text">Area</span>
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={2} className="center-text">
+            <span className="bold-text">Status</span>
+          </Grid>
+        </Grid>
+        <RegularLoading />
+      </div>
+    );
   }
 
   return (
     <div className="pending-container">
-      <span className="pending-head">Pending Complaints</span>
+      <Grid container alignItems="center" className="pending-card-head">
+        <Grid item xs={12} sm={3} className="center-text">
+          <div className="content-info">
+            <span className="bold-text">Date</span>
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={5}>
+          <div className="content-info">
+            <span className="bold-text">Subject</span>
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={2} className="center-text">
+          <div className="content-info">
+            <span className="bold-text">Area</span>
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={2} className="center-text">
+          <span className="bold-text">Status</span>
+        </Grid>
+      </Grid>
       {pendingData.map((data, idx) => (
         <Grid
           container
@@ -45,21 +84,16 @@ const PendingComplaints = ({ headers }) => {
           key={idx}
         >
           <Grid item xs={12} sm={3} className="center-text">
-            <div className="content-info">
-              <span className="bold-text">Date : </span>
-            </div>
+            <div className="content-info"></div>
             <span>{format(parseISO(data.date), "dd/MM/yyyy")}</span>
           </Grid>
           <Grid item xs={12} sm={5}>
             <div className="content-info">
-              <span className="bold-text">Subject</span>
               <span>{data.complaintBody.subject}</span>
             </div>
           </Grid>
           <Grid item xs={12} sm={2} className="center-text">
-            <div className="content-info">
-              <span className="bold-text">Area: </span>
-            </div>
+            <div className="content-info"></div>
             <span>{data.complaintBody.area}</span>
           </Grid>
           <Grid item xs={12} sm={2} className="center-text">

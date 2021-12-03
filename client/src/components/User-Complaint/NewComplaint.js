@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   TextField,
   Grid,
@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 
-const NewComplaint = ({ headers, setIsOpen, setTabValue }) => {
+const NewComplaint = ({ headers, setIsOpen, setTabValue, setMainHeading }) => {
   const [complaint, setComplaint] = useState({ complaintBody: {} });
 
   const handleChange = (e) => {
@@ -27,17 +27,21 @@ const NewComplaint = ({ headers, setIsOpen, setTabValue }) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:5001/api/user/complaint/new",
+        `${process.env.REACT_APP_URL}/api/user/complaint/new`,
         { data: complaint },
         { headers }
       );
       console.log(res.data);
-      setIsOpen(true)
-      setTabValue(1)
+      setIsOpen(true);
+      setTabValue(1);
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    setMainHeading("Complaints Hub");
+  }, []);
 
   return (
     <div className="new-comp-container">

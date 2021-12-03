@@ -37,7 +37,7 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
     if (validate() === true) {
       try {
         const response = await axios.post(
-          "http://localhost:5001/api/auth/register",
+          `${process.env.REACT_APP_URL}/api/auth/register`,
           { data: register }
         );
         console.log(response.data.message);

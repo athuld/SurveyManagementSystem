@@ -99,13 +99,13 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
   const getSurveys = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5001/api/admin/survey/fetch",
+        `${process.env.REACT_APP_URL}/api/admin/survey/fetch`,
         { headers }
       );
       const values = [...res.data];
       for (let i = 0; i < values.length; i++) {
         const res = await axios.get(
-          `http://localhost:5001/api/admin/survey/responseCount/${values[i]._id}`,
+          `${process.env.REACT_APP_URL}/api/admin/survey/responseCount/${values[i]._id}`,
           { headers }
         );
         values[i].responses = res.data;
@@ -152,7 +152,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
     setOpen(false);
     try {
       const res = await axios.delete(
-        `http://localhost:5001/api/admin/survey/${_id}`,
+        `${process.env.REACT_APP_URL}/api/admin/survey/${_id}`,
         { headers }
       );
       console.log(res);
@@ -246,8 +246,8 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
                       <TableCell align="center">{survey.responses}</TableCell>
                       <TableCell align="center">
                         <Button
-                          color="primary"
-                          style={{ fontSize: ".8em" }}
+                        id="view-btn"
+                          style={{ fontSize: ".2em" }}
                           onClick={() =>
                             history.push(
                               `/admin/surveys/response/${survey._id}`
@@ -257,9 +257,8 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
                           Show
                         </Button>{" "}
                         <Button
-                          color="secondary"
-                          id={`${survey._id}-title`}
-                          style={{ fontSize: ".8em" }}
+                            id="delete-btn"
+                          style={{ fontSize: ".2em" }}
                           onClick={() =>
                             handleOpen(
                               survey._id,

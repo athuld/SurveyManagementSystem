@@ -29,6 +29,7 @@ const ConfirmDelete = (props) => {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
+              textAlign: "center",
             }}
           >
             <span style={{ fontWeight: "500", fontSize: "1.5em" }}>
@@ -42,8 +43,8 @@ const ConfirmDelete = (props) => {
             >
               {dialogDetails.description}
             </span>
+            <span>{`By clicking on 'DELETE' you will delete this ${dialogDetails.item}`}</span>
           </span>
-          {`By clicking on 'DELETE' you will delete this ${dialogDetails.item}`}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -54,7 +55,7 @@ const ConfirmDelete = (props) => {
           variant="contained"
           onClick={() => handleDelete(dialogDetails.id)}
           id="delete-btn"
-          //   className={classes.button}
+          style={{ marginBottom: ".8em", marginRight: "1.3em" }}
           startIcon={<Delete />}
         >
           Delete

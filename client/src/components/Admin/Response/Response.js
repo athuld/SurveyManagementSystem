@@ -25,7 +25,7 @@ const Response = () => {
   const getSurvey = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5001/api/admin/survey/${surveyId}`
+        `${process.env.REACT_APP_URL}/api/admin/survey/${surveyId}`
       );
       setSurveyDetails(res.data);
     } catch (error) {
@@ -36,7 +36,7 @@ const Response = () => {
   const getResponses = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5001/api/survey/response/${surveyId}`,
+        `${process.env.REACT_APP_URL}/api/survey/response/${surveyId}`,
         { headers }
       );
       setResponseData(res.data);

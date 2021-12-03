@@ -58,7 +58,7 @@ const FamilyAddBtn = ({ headers, setMemberNum }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/user/members/add/",
+        `${process.env.REACT_APP_URL}/api/user/members/add/`,
         { data: member },
         { headers }
       );

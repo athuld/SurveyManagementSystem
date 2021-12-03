@@ -21,7 +21,7 @@ const SurveyRespond = ({ setIsOpen }) => {
   const getSurveyDetails = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5001/api/admin/survey/${surveyId}`
+        `${process.env.REACT_APP_URL}/api/admin/survey/${surveyId}`
       );
       setSurveyDetails(res.data);
       const values = [...response];
@@ -48,7 +48,7 @@ const SurveyRespond = ({ setIsOpen }) => {
     e.preventDefault();
     const responseData = { surveyId, responses: response };
     const res = await axios.post(
-      "http://localhost:5001/api/admin/survey/response",
+      `${process.env.REACT_APP_URL}/api/admin/survey/response`,
       {
         data: responseData,
       }

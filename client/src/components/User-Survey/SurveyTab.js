@@ -25,7 +25,7 @@ const SurveyTab = ({ isOpen, setIsOpen }) => {
   const getSurveys = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5001/api/admin/survey/fetch",
+        `${process.env.REACT_APP_URL}/api/admin/survey/fetch`,
         { headers }
       );
       setSurveys(res.data);

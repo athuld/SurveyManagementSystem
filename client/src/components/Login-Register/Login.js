@@ -22,7 +22,7 @@ const Login = ({ setShowAlertModal, setIsLoggedIn }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/auth/login",
+        `${process.env.REACT_APP_URL}/api/auth/login`,
         { data: login }
       );
       if (response.data.token) {
