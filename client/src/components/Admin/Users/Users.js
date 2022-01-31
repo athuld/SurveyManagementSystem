@@ -23,6 +23,7 @@ import axios from "axios";
 import ConfirmDelete from "../../AlertModal/ConfirmDelete";
 import BackdropLoading from "../../Loading/BackdropLoading";
 import Notification from "../../AlertModal/Notification";
+import NoRecords from "../../NoRecords/NoRecords";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -99,9 +100,12 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
 
   const getUsers = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_URL}/api/user/fetch`, {
-        headers,
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_URL}/api/user/fetch`,
+        {
+          headers,
+        }
+      );
       setUsers(res.data);
       setSearchData(res.data);
     } catch (err) {
@@ -140,9 +144,12 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
   const handleDelete = async (_id) => {
     setOpen(false);
     try {
-      const res = await axios.delete(`${process.env.REACT_APP_URL}/api/user/${_id}`, {
-        headers,
-      });
+      const res = await axios.delete(
+        `${process.env.REACT_APP_URL}/api/user/${_id}`,
+        {
+          headers,
+        }
+      );
       setDeletedId({
         id: res.data.id,
       });
@@ -159,6 +166,27 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
 
   if (searchData.length === 0) {
     return <BackdropLoading />;
+  }
+
+  if (users.message === "no records") {
+    return (
+      <div>
+        <AdminHome />
+        <div className={classes.content}>
+          <main className="survey">
+            <div className="header-bar">
+              <div className="all-user-container">
+                <Avatar id="all-user-avatar">
+                  <PeopleAltTwoTone />
+                </Avatar>
+                <span>All Users</span>
+              </div>
+            </div>
+          </main>
+        </div>
+        <NoRecords message={"No Users Found"} />
+      </div>
+    );
   }
 
   return (
@@ -237,7 +265,7 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
                       </TableCell>
                       <TableCell align="center">
                         <Button
-                         id="delete-btn"
+                          id="delete-btn"
                           style={{ fontSize: ".2em" }}
                           onClick={() =>
                             handleOpen(

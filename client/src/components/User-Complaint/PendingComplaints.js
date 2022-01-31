@@ -4,6 +4,7 @@ import { Chip, Grid } from "@material-ui/core";
 import { Loop } from "@material-ui/icons";
 import RegularLoading from "../Loading/RegularLoading";
 import { format, parseISO } from "date-fns";
+import NoRecords from "../NoRecords/NoRecords";
 
 const PendingComplaints = ({ headers, setMainHeading }) => {
   const [pendingData, setPendingData] = useState([]);
@@ -28,27 +29,15 @@ const PendingComplaints = ({ headers, setMainHeading }) => {
   if (pendingData.length === 0) {
     return (
       <div className="pending-container">
-        <Grid container alignItems="center" className="pending-card-head">
-          <Grid item xs={12} sm={3} className="center-text">
-            <div className="content-info">
-              <span className="bold-text">Date</span>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={5}>
-            <div className="content-info">
-              <span className="bold-text">Subject</span>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={2} className="center-text">
-            <div className="content-info">
-              <span className="bold-text">Area</span>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={2} className="center-text">
-            <span className="bold-text">Status</span>
-          </Grid>
-        </Grid>
         <RegularLoading />
+      </div>
+    );
+  }
+
+  if (pendingData.message === "no records") {
+    return (
+      <div className="pending-container">
+        <NoRecords message={"No Complaints Found"}/>
       </div>
     );
   }

@@ -54,7 +54,11 @@ router.delete("/:surveyId", verify, async (req, res) => {
 router.get("/fetch/", verify, async (req, res) => {
   try {
     const surveyDetails = await Surveys.find({}).sort({ createdAt: -1 });
-    res.json(surveyDetails);
+    if (surveyDetails.length === 0) {
+      res.status(200).json({ message: "no records" });
+    } else {
+      res.json(surveyDetails);
+    }
   } catch (err) {
     res.status(400).json(err);
   }

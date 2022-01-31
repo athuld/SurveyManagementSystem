@@ -21,6 +21,7 @@ import axios from "axios";
 import ConfirmDelete from "../../AlertModal/ConfirmDelete";
 import BackdropLoading from "../../Loading/BackdropLoading";
 import Notification from "../../AlertModal/Notification";
+import NoRecords from "../../NoRecords/NoRecords";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -55,6 +56,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, surveys.length - page * rowsPerPage);
   const [searched, setSearched] = useState("");
+    const [resData,setResData] = useState("")
 
   const headers = {
     autherisation: `Bearer ${Cookie.get("accessToken")}`,
@@ -102,6 +104,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
         `${process.env.REACT_APP_URL}/api/admin/survey/fetch`,
         { headers }
       );
+    setResData(res.data)
       const values = [...res.data];
       for (let i = 0; i < values.length; i++) {
         const res = await axios.get(
@@ -170,8 +173,29 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
   };
   /************************************************************************** */
 
-  if (searchData.length === 0) {
+  if (resData.length === 0) {
     return <BackdropLoading />;
+  }
+
+  if (resData.message === "no records") {
+    return (
+      <div>
+        <AdminHome />
+        <div className={classes.content}>
+          <main className="survey">
+            <div className="header-bar">
+              <button
+                className="new-btn"
+                onClick={() => history.push("/admin/surveys/new")}
+              >
+                New Survey
+              </button>
+            </div>
+          </main>
+        </div>
+        <NoRecords message={"No Surveys Found"} />
+      </div>
+    );
   }
 
   return (
@@ -246,7 +270,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
                       <TableCell align="center">{survey.responses}</TableCell>
                       <TableCell align="center">
                         <Button
-                        id="view-btn"
+                          id="view-btn"
                           style={{ fontSize: ".2em" }}
                           onClick={() =>
                             history.push(
@@ -257,7 +281,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
                           Show
                         </Button>{" "}
                         <Button
-                            id="delete-btn"
+                          id="delete-btn"
                           style={{ fontSize: ".2em" }}
                           onClick={() =>
                             handleOpen(

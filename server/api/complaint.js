@@ -42,7 +42,11 @@ router.get("/get", verify, async (req, res) => {
   try {
     if (isAdmin) {
       const complaints = await Complaint.find();
-      res.status(200).json(complaints);
+      if (complaints.length === 0) {
+        res.status(200).json({ message: "no records" });
+      } else {
+        res.status(200).json(complaints);
+      }
     } else res.status(404).json({ message: "Unauthorised" });
   } catch (err) {
     res.status(400).json(err);
@@ -68,7 +72,12 @@ router.get("/get/:statusType", verify, async (req, res) => {
       userId: userId,
       "complaintRes.status": req.params.statusType,
     }).sort("-date");
-    res.status(200).json(statusComplaints);
+
+    if (statusComplaints.length === 0) {
+      res.status(200).json({ message: "no records" });
+    } else {
+      res.status(200).json(statusComplaints);
+    }
   } catch (err) {
     res.status(400).json(err);
   }

@@ -29,6 +29,7 @@ import Notification from "../../AlertModal/Notification";
 import { format, parseISO } from "date-fns";
 import "./ComplaintAdmin.scss";
 import ResolveCard from "./ResolveCard";
+import NoRecords from "../../NoRecords/NoRecords"
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -189,6 +190,27 @@ const ComplaintAdmin = ({
     return <BackdropLoading />;
   }
 
+  if (searchData.message === "no records") {
+    return (
+      <div>
+        <AdminHome />
+        <div className={classes.content}>
+          <main className="complaint">
+            <div className="header-bar">
+              <div className="all-complaint-container">
+                <Avatar id="all-complaint-avatar">
+                  <PeopleAltTwoTone />
+                </Avatar>
+                <span>All complaints</span>
+              </div>
+            </div>
+          </main>
+        </div>
+        <NoRecords message={"No Complaints Found"} />
+      </div>
+    );
+  }
+
   return (
     <div>
       <AdminHome />
@@ -338,7 +360,7 @@ const ComplaintAdmin = ({
           />
           <ResolveCard
             resolveComplaint={resolveComplaint}
-      isResolved={isResolved}
+            isResolved={isResolved}
             setIsResolved={setIsResolved}
             resolveOpen={resolveOpen}
             setResolveOpen={setResolveOpen}

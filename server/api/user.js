@@ -35,7 +35,11 @@ router.get("/fetch", verify, async (req, res) => {
     const userDetails = await User.find({
       email: { $not: { $eq: "admin@survey.com" } },
     }).select("-password");
-    res.json(userDetails);
+    if (userDetails.length === 0) {
+      res.status(200).json({ message: "no records" });
+    } else {
+      res.status(200).json(userDetails);
+    }
   } catch (error) {
     res.send(error);
   }

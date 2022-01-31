@@ -10,6 +10,7 @@ import axios from "axios";
 import Cookie from "js-cookie";
 import Notification from "../AlertModal/Notification";
 import RegularLoading from "../Loading/RegularLoading";
+import NoRecords from "../NoRecords/NoRecords";
 
 const SurveyTab = ({ isOpen, setIsOpen }) => {
   document.title = "Surveys";
@@ -44,6 +45,15 @@ const SurveyTab = ({ isOpen, setIsOpen }) => {
         <NavBar user={true} />
         <h2 className="survey-page">Available Surveys</h2>
         <RegularLoading />
+      </div>
+    );
+  }
+
+  if (surveys.message === "no records") {
+    return (
+      <div>
+        <NavBar user={true} />
+        <NoRecords message={"No Surveys Listed"} />
       </div>
     );
   }

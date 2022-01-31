@@ -1,0 +1,14 @@
+.norecords-sec{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    span{
+        font-size: 1.5em;
+    }
+}
+.norecords-icon{
+    width: 50vw;
+    height: 55vh;
+}
