@@ -57,7 +57,14 @@ function App() {
               setIsRegistered={setIsRegistered}
             />
           </Route>
-          <Route path="/user" component={UserHome} exact />
+          <Route path="/user" exact>
+            <UserHome
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              notification={notification}
+              setNotification={setNotification}
+            />
+          </Route>
           <Route path="/user/surveys" exact>
             <SurveyTab isOpen={isOpen} setIsOpen={setIsOpen} />
           </Route>

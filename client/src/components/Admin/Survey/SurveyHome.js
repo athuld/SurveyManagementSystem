@@ -271,7 +271,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
                       <TableCell align="center">
                         <Button
                           id="view-btn"
-                          style={{ fontSize: ".2em" }}
+                          style={{ fontSize: ".6em" }}
                           onClick={() =>
                             history.push(
                               `/admin/surveys/response/${survey._id}`
@@ -282,7 +282,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
                         </Button>{" "}
                         <Button
                           id="delete-btn"
-                          style={{ fontSize: ".2em" }}
+                          style={{ fontSize: ".6em" }}
                           onClick={() =>
                             handleOpen(
                               survey._id,

@@ -233,6 +233,9 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
                     Gender
                   </TableCell>
                   <TableCell id="table-cell" align="left">
+                    District
+                  </TableCell>
+                  <TableCell id="table-cell" align="left">
                     Email
                   </TableCell>
                   <TableCell id="table-cell" align="center">
@@ -258,6 +261,7 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
                         {`${user.firstName} ${user.lastName}`}
                       </TableCell>
                       <TableCell align="left">{user.gender}</TableCell>
+                      <TableCell align="left">{user.district}</TableCell>
                       <TableCell align="left">{user.email}</TableCell>
                       <TableCell align="center">{user.age}</TableCell>
                       <TableCell align="center">
@@ -266,7 +270,7 @@ const Users = ({ isOpen, setIsOpen, notification, setNotification }) => {
                       <TableCell align="center">
                         <Button
                           id="delete-btn"
-                          style={{ fontSize: ".2em" }}
+                          style={{ fontSize: ".6em" }}
                           onClick={() =>
                             handleOpen(
                               user._id,

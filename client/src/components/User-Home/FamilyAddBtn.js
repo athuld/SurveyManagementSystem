@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FamilyAddBtn = ({ headers, setMemberNum }) => {
+const FamilyAddBtn = ({ headers, setMemberNum,setIsOpen,setNotification }) => {
   const [open, setOpen] = useState(false);
   const [member, setMember] = useState({});
 
@@ -64,6 +64,9 @@ const FamilyAddBtn = ({ headers, setMemberNum }) => {
       );
       setMemberNum(response.data.members.length);
       setOpen(false);
+        setNotification({severity:"success",message:"User Added Succussfully!"})
+        setIsOpen(true)
+
     } catch (err) {
       console.log(err);
     }
@@ -79,7 +82,7 @@ const FamilyAddBtn = ({ headers, setMemberNum }) => {
         onClick={handleOpenClick}
       >
         <AddButton />
-        <div>Add a family member</div>
+        <div className="add-btn-info">Add a family member</div>
       </IconButton>
       <Dialog
         open={open}
@@ -126,6 +129,9 @@ const FamilyAddBtn = ({ headers, setMemberNum }) => {
                   >
                     <MenuItem value="father">Father</MenuItem>
                     <MenuItem value="mother">Mother</MenuItem>
+                    <MenuItem value="husband">Husband</MenuItem>
+                    <MenuItem value="wife">Wife</MenuItem>
+                    <MenuItem value="sister">Sister</MenuItem>
                     <MenuItem value="brother">Brother</MenuItem>
                     <MenuItem value="grandmother">Grandmother</MenuItem>
                     <MenuItem value="grandfather">Grandfather</MenuItem>

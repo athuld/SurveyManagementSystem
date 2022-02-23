@@ -179,14 +179,51 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
                     required
                   />
                 </Grid>
+                <Grid item xs={12} sm={12}>
+                  <FormControl
+                    variant="filled"
+                    fullWidth
+                    margin="dense"
+                    required
+                  >
+                    <InputLabel id="district">District</InputLabel>
+                    <Select
+                      labelId="select-district"
+                      id="district"
+                      name="district"
+                      label="District"
+                      defaultValue=""
+                      onChange={handleChange}
+                    >
+                      <MenuItem value="Alappuzha">Alappuzha</MenuItem>
+                      <MenuItem value="Ernakulam">Ernakulam</MenuItem>
+                      <MenuItem value="Idukki">Idukki</MenuItem>
+                      <MenuItem value="Kannur">Kannur</MenuItem>
+                      <MenuItem value="Kasaragod">Kasaragod</MenuItem>
+                      <MenuItem value="Kollam">Kollam</MenuItem>
+                      <MenuItem value="Kottayam">Kottayam</MenuItem>
+                      <MenuItem value="Kozhikode">Kozhikode</MenuItem>
+                      <MenuItem value="Malappuram">Malappuram</MenuItem>
+                      <MenuItem value="Palakkad">Palakkad</MenuItem>
+                      <MenuItem value="Pathanamthitta">Pathanamthitta</MenuItem>
+                      <MenuItem value="Thiruvananthapuram">
+                        Thiruvananthapuram
+                      </MenuItem>
+                      <MenuItem value="Thrissur">Thrissur</MenuItem>
+                      <MenuItem value="Wayanad">Wayanad</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
               </Grid>
               <button type="submit" className="register-btn">
                 Register
               </button>
               <br />
-              <span className="info">
-                Already have an account? <Link to="/login">Log In</Link>
-              </span>
+              <div className="info">
+                <span>
+                  Already have an account? <Link to="/login">Log In</Link>
+                </span>
+              </div>
             </StylesProvider>
           </form>
         </motion.div>

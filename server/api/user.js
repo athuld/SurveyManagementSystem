@@ -100,19 +100,31 @@ router.post("/members/add/", verify, (req, res) => {
       return "grandpa.png";
     }
     if (memberAge >= 60) {
-      if (relationship === "brother" || relationship === "father") {
+      if (
+        relationship === "brother" ||
+        relationship === "father" ||
+        relationship === "husband"
+      ) {
         return "grandpa.png";
       }
       return "grandma.png";
     }
     if (memberAge >= 30) {
-      if (relationship === "brother" || relationship === "father") {
+      if (
+        relationship === "brother" ||
+        relationship === "father" ||
+        relationship === "husband"
+      ) {
         return "man.png";
       }
       return "woman.png";
     }
     if (memberAge >= 18) {
-      if (relationship === "brother" || relationship === "father") {
+      if (
+        relationship === "brother" ||
+        relationship === "father" ||
+        relationship === "husband"
+      ) {
         return "teenboy.png";
       }
       return "teengirl.png";

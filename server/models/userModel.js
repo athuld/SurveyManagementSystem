@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  district: {
+    type: String,
+    required: true,
+  },
   avatar: {
     type: String,
     required: true,
@@ -37,6 +41,10 @@ const userSchema = new mongoose.Schema({
   surveys: {
     type: Number,
     default: 0,
+  },
+  relationship: {
+    type: String,
+    default: null,
   },
   members: [
     {

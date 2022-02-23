@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import NavBar from "../NavBar/NavBar";
 import RegularLoading from "../Loading/RegularLoading";
+import Helmet from "react-helmet"
 
 const SurveyRespond = ({ setIsOpen }) => {
   const { surveyId } = useParams();
@@ -72,6 +73,7 @@ const SurveyRespond = ({ setIsOpen }) => {
 
   return (
     <main>
+    <Helmet bodyAttributes={{style: 'background-color : #d8f4f9'}}/>
       <NavBar user={true} />
       <form onSubmit={handleSubmit}>
         <div className="response-block header">

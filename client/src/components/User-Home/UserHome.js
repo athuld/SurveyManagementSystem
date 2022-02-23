@@ -15,6 +15,7 @@ import NavBar from "../NavBar/NavBar";
 import FamilyCard from "./FamilyCard";
 import FamilyAddBtn from "./FamilyAddBtn";
 import BackdropLoading from "../Loading/BackdropLoading";
+import Notification from "../AlertModal/Notification";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserHome = () => {
+const UserHome = ({ isOpen, setIsOpen,notification, setNotification }) => {
   const [userDetails, setUserDetails] = useState({});
   const [memberNum, setMemberNum] = useState(0);
   const classes = useStyles();
@@ -66,7 +67,7 @@ const UserHome = () => {
   };
 
   useEffect(() => {
-    document.title="Home"
+    document.title = "Home";
     getUserDetails();
   }, [memberNum]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -80,6 +81,12 @@ const UserHome = () => {
   return (
     <div>
       <NavBar user={true} />
+      <Notification
+        isOpen={isOpen}
+        severity={notification.severity}
+        setIsOpen={setIsOpen}
+        message={notification.message}
+      />
       <div className="container">
         <h1 className="title">My Dashboard</h1>
         <Grid container spacing={2} alignContent="center" alignItems="center">
@@ -100,6 +107,7 @@ const UserHome = () => {
                     <p className="name">
                       {userDetails.firstName} {userDetails.lastName}
                     </p>
+                    <p className="general district">{userDetails.district}</p>
                     <p className="general">{userDetails.email}</p>
                     <p className="general">{userDetails.age} years old</p>
                   </div>
@@ -136,13 +144,21 @@ const UserHome = () => {
                   firstName={member.firstName}
                   lastName={member.lastName}
                   age={member.age}
+                  relationship={member.relationship}
                   headers={headers}
                   setMemberNum={setMemberNum}
+                  setIsOpen={setIsOpen}
+                  setNotification={setNotification}
                 />
               );
             })}
           {userDetails.members.length <= 3 && (
-            <FamilyAddBtn headers={headers} setMemberNum={setMemberNum} />
+            <FamilyAddBtn
+              headers={headers}
+              setMemberNum={setMemberNum}
+              setIsOpen={setIsOpen}
+              setNotification={setNotification}
+            />
           )}
         </Grid>
       </div>

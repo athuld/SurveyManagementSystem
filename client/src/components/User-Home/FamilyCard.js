@@ -13,7 +13,7 @@ import {
   DialogTitle,
   Button,
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteTwoTone from "@material-ui/icons/DeleteTwoTone";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,8 +35,11 @@ const FamilyCard = ({
   firstName,
   lastName,
   age,
+  relationship,
   headers,
   setMemberNum,
+  setIsOpen,
+  setNotification,
 }) => {
   const [open, setOpen] = useState(false); // for opening and closing the dialog
   const classes = useStyles();
@@ -59,6 +62,8 @@ const FamilyCard = ({
         { headers }
       );
       setMemberNum(response.data.members.length);
+        setNotification({severity:"error",message:"User Deleted Succussfully!"})
+        setIsOpen(true)
     } catch (err) {
       console.log(err);
     }
@@ -71,8 +76,8 @@ const FamilyCard = ({
      */
     <Grid item xs={12} sm={3}>
       <Paper elevation={2} className={classes.paper} id="family-paper">
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={3}>
             <Avatar
               alt="Member Avatar"
               src={`assets/${avatar}`}
@@ -80,11 +85,20 @@ const FamilyCard = ({
               id="family-avatar"
             />
           </Grid>
+          <Grid item xs={12} sm={7}>
+            <div className="family-info">
+              <p className="name">
+                {firstName} {lastName}
+              </p>
+              <p className="general-mem">{age} years old</p>
+              <p className="general-mem">{relationship}</p>
+            </div>
+          </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={2}>
             <div>
               <IconButton id="icon-btn" onClick={handleClickOpen}>
-                <DeleteIcon />
+                <DeleteTwoTone />
               </IconButton>
               <Dialog
                 open={open}
@@ -109,7 +123,7 @@ const FamilyCard = ({
                     onClick={handleDelete}
                     id="delete-btn"
                     className={classes.button}
-                    startIcon={<DeleteIcon />}
+                    startIcon={<DeleteTwoTone />}
                   >
                     Delete
                   </Button>
@@ -118,12 +132,6 @@ const FamilyCard = ({
             </div>
           </Grid>
         </Grid>
-        <div className="family-info">
-          <p className="name">
-            {firstName} {lastName}
-          </p>
-          <p className="general">{age} years old</p>
-        </div>
       </Paper>
     </Grid>
   );

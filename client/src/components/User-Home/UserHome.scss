@@ -35,10 +35,13 @@
 }
 
 .profile-info {
-    text-align: center;
+    display:flex;
+    align-item:center;
+    justify-content:center;
+    flex-direction:column;
     .name {
         color: $color-dark;
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         max-width: 15ch;
         font-weight: 800;
     }
@@ -46,11 +49,20 @@
         font-size: 0.8rem;
         font-weight: 300;
     }
+    .district {
+        font-size:1.1rem;
+    }
 }
 
 .family-info {
     .name {
-        font-weight: 600;
+         color:$color-dark;
+         font-size:1.1em;
+         font-weight:600;
+    }
+    .general-mem {
+         font-size: 0.9rem;
+         font-weight: 400;
     }
 }
 
@@ -61,8 +73,7 @@
 }
 
 #icon-btn {
-    margin-left: 2.5em;
-    color: #e76f51;
+    color:#B71C1C;
 }
 
 #delete-btn {
@@ -72,6 +83,9 @@
 
 #add-btn:hover {
     background-color: transparent;
+}
+.add-btn-info {
+    font-size:.6em;
 }
 
 #new-member-btn {

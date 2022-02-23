@@ -59,8 +59,7 @@ const Login = ({ setShowAlertModal, setIsLoggedIn }) => {
         <motion.div
           transition={transition}
           exit={{ opacity: 0 }}
-          className="form-container"
-          id="login-form-container"
+          className="form-container login-cont"
         >
           <form
             action=""
@@ -99,9 +98,11 @@ const Login = ({ setShowAlertModal, setIsLoggedIn }) => {
                 LogIn
               </button>
               <br />
-              <span className="info">
-                Don't have an account? <Link to="/signup">Sign Up</Link>
-              </span>
+              <div className="info">
+                <span>
+                  Don't have an account? <Link to="/signup">Sign Up</Link>
+                </span>
+              </div>
             </StylesProvider>
           </form>
         </motion.div>

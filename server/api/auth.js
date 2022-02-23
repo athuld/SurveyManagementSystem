@@ -13,7 +13,8 @@ const jwt = require("jsonwebtoken");
  */
 
 router.post("/register", async (req, res) => {
-  const { firstname, lastname, email, gender, dob, password } = req.body.data;
+  const { firstname, lastname, email, gender, dob, password, district } =
+    req.body.data;
 
   //Check if the user exist //
   const emailExist = await User.findOne({ email });
@@ -69,6 +70,7 @@ router.post("/register", async (req, res) => {
     dob,
     age: userAge,
     password: hashedPassword,
+    district,
     avatar: getAvatar(),
   });
   try {

@@ -304,7 +304,7 @@ const ComplaintAdmin = ({
                           id="view-btn"
                           variant="contained"
                           color="primary"
-                          style={{ fontSize: ".2em" }}
+                          style={{ fontSize: ".6em" }}
                           onClick={() => handleResolveView(complaint)}
                         >
                           View
@@ -313,7 +313,7 @@ const ComplaintAdmin = ({
                           variant="contained"
                           // id={`${complaint._id}-title`}
                           id="delete-btn"
-                          style={{ fontSize: ".2em" }}
+                          style={{ fontSize: ".6em" }}
                           onClick={() =>
                             handleOpen(
                               complaint._id,

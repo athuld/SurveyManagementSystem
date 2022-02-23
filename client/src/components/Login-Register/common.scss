@@ -17,9 +17,10 @@
     // background-image:linear-gradient(#DDDD,$color-seconday);
     background-color: #edf2f4;
     border-radius: 0.5em;
-    width: 33rem;
-    padding: 3em;
+    width: 28rem;
+    padding: 1em;
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+    margin: 1em 0 1em 0;
 
     .form {
         width: 22rem;
@@ -35,9 +36,11 @@
         font-size: medium;
     }
     .info {
-        font-size: small;
-        text-align: center;
-        margin-left: 4rem;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size: 0.85em;
+        padding-bottom:0.3em;
     }
 
     .MuiFormLabel-root {
@@ -58,24 +61,20 @@
         cursor: pointer;
     }
     .login {
-        // margin-left: 1rem;
-
-        padding: 0.92em 9.6em;
+        padding: 0.92em 9.4em;
     }
+}
+.login-cont {
+    width:28em;
+    padding:3em 0em;
 }
 #date {
     margin-top: -0.4em;
 }
 
-#login-form-container {
-    width: 30rem;
-}
 
 #login-form {
     width: 18rem;
-    .info {
-        margin-left: 2.8rem;
-    }
 }
 
 .circle-1 {
