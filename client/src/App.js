@@ -98,7 +98,12 @@ function App() {
             />
           </Route>
           <Route path="/admin/surveys/response/:surveyId">
-            <Response />
+            <Response
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              notification={notification}
+              setNotification={setNotification}
+            />
           </Route>
           <Route path="/admin/complaints">
             <ComplaintAdmin

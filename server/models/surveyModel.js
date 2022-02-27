@@ -10,6 +10,11 @@ const surveySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isAcceptingResponse: {
+      type: Boolean,
+      default: true,
+      required: true,
+    },
     questions: [
       {
         question: {

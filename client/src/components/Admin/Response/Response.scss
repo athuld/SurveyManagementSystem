@@ -81,6 +81,17 @@
   }
 }
 
+.response-tab-header{
+    display:flex;
+    justify-content:space-between;
+    margin:0 2em 0 2em;
+    .MuiTypography-body1{
+     color:$color-dark;
+     font-weight:bold;
+     font-family:Poppins;
+ }   
+}
+
 .summary-question-block {
   display: flex;
   flex-direction: column;

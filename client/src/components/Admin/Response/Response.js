@@ -9,7 +9,7 @@ import BackdropLoading from "../../Loading/BackdropLoading";
 import SurveyTab from "./SurveyTab";
 import ResponseTab from "./ResponseTab/ResponseTab";
 
-const Response = () => {
+const Response = ({isOpen,setIsOpen,notification,setNotification}) => {
   document.body.style.backgroundColor = "#D8F4F9";
   const history = useHistory();
   const { surveyId } = useParams();
@@ -17,6 +17,7 @@ const Response = () => {
   const [surveyDetails, setSurveyDetails] = useState({});
   const [responseData, setResponseData] = useState([]);
   const [tabValue, setTabValue] = useState(0);
+  const [acceptResponse, setAcceptResponse] = useState({});
 
   const headers = {
     autherisation: `Bearer ${Cookie.get("accessToken")}`,
@@ -28,6 +29,7 @@ const Response = () => {
         `${process.env.REACT_APP_URL}/api/admin/survey/${surveyId}`
       );
       setSurveyDetails(res.data);
+      setAcceptResponse({isAcceptingResponse:res.data.isAcceptingResponse})
     } catch (error) {
       console.log(error);
     }
@@ -51,6 +53,9 @@ const Response = () => {
 
   useEffect(() => {
     getSurvey();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
     getResponses();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -95,8 +100,16 @@ const Response = () => {
       {tabValue === 0 && <SurveyTab surveyDetails={surveyDetails} />}
       {tabValue === 1 && (
         <ResponseTab
+          headers={headers}
+          surveyId={surveyId}
           responseData={responseData}
           surveyDetails={surveyDetails}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          notification={notification}
+          setNotification={setNotification}
+          acceptResponse={acceptResponse}
+          setAcceptResponse={setAcceptResponse}
         />
       )}
     </div>
