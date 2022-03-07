@@ -1,7 +1,15 @@
 import { useState, Fragment } from "react";
 import { useHistory } from "react-router-dom";
 import "./Survey.scss";
-import { Button, TextField } from "@material-ui/core";
+import {
+  Button,
+  TextField,
+  Select,
+  FormControl,
+  Grid,
+  MenuItem,
+  InputLabel,
+} from "@material-ui/core";
 import { Save, Cancel, Add } from "@material-ui/icons";
 import QuestionCard from "./QuestionCard";
 import axios from "axios";
@@ -17,6 +25,11 @@ const NewSurvey = ({ setIsOpen, setNotification }) => {
   const [questions, setQuestions] = useState([
     { question: "", type: "radio", options: [{ option: "" }], required: true },
   ]);
+  const [filterData, setFilterData] = useState({
+    district: "All",
+    gender: "All",
+    age: "All",
+  });
 
   const headers = {
     autherisation: `Bearer ${Cookie.get("accessToken")}`,
@@ -43,7 +56,7 @@ const NewSurvey = ({ setIsOpen, setNotification }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const questionsData = { questions: questions };
-    const data = { ...header, ...questionsData };
+    const data = { ...header, ...filterData, ...questionsData };
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_URL}/api/admin/survey/add`,
@@ -60,6 +73,32 @@ const NewSurvey = ({ setIsOpen, setNotification }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const districtValues = [
+    "All",
+    "Alappuzha",
+    "Ernakulam",
+    "Idukki",
+    "Kannur",
+    "Kasaragod",
+    "Kollam",
+    "Kottayam",
+    "Kozhikode",
+    "Malappuram",
+    "Palakkad",
+    "Pathanamthitta",
+    "Thiruvananthapuram",
+    "Thrissur",
+    "Wayanad",
+  ];
+
+  const handleFilterChange = (e) => {
+    setFilterData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+    console.log(filterData);
   };
 
   return (
@@ -87,6 +126,71 @@ const NewSurvey = ({ setIsOpen, setNotification }) => {
               </Button>
             </div>
           </nav>
+        </div>
+
+        <div className="filter-nav">
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <FormControl variant="filled" fullWidth margin="dense" required>
+                <InputLabel id="district">District</InputLabel>
+                <Select
+                  labelId="select-district"
+                  id="district"
+                  name="district"
+                  label="District"
+                  defaultValue="All"
+                  onChange={handleFilterChange}
+                >
+                  {districtValues.map((district, i) => {
+                    return (
+                      <MenuItem value={district} key={i}>
+                        {district}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <FormControl variant="filled" fullWidth margin="dense" required>
+                <InputLabel id="gender">Gender</InputLabel>
+                <Select
+                  labelId="select-gender"
+                  id="gender"
+                  name="gender"
+                  label="Gender"
+                  defaultValue="All"
+                  onChange={handleFilterChange}
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                  <MenuItem value="Others">Others</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <FormControl variant="filled" fullWidth margin="dense" required>
+                <InputLabel id="age">Age</InputLabel>
+                <Select
+                  labelId="select-age"
+                  id="age"
+                  name="age"
+                  label="Age"
+                  defaultValue="All"
+                  onChange={handleFilterChange}
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="below 18">below 18</MenuItem>
+                  <MenuItem value="above 18">18-30</MenuItem>
+                  <MenuItem value="above 30">31-50</MenuItem>
+                  <MenuItem value="above 50">51 above</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
         </div>
 
         <div className="survey-block" onChange={handleHeaderChange}>

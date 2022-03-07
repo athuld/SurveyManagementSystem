@@ -15,6 +15,18 @@ const surveySchema = new mongoose.Schema(
       default: true,
       required: true,
     },
+    district: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    age: {
+      type: String,
+      required: true,
+    },
     questions: [
       {
         question: {

@@ -91,6 +91,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom:2em;
 }
 
 #table-container {
@@ -142,4 +143,14 @@ body {
 
 #all-user-avatar {
     background-color: $color-primary;
+}
+
+.filter-nav{
+    width:50vw;
+    background-color:white;
+    background-color: #fffefe;
+    padding:1em 2em;
+    border-radius:0.5em;
+    margin:0 auto;
+    margin-bottom:1em;
 }

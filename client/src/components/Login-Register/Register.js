@@ -62,6 +62,23 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
     console.log(register);
   };
 
+  const districtValues = [
+    "Alappuzha",
+    "Ernakulam",
+    "Idukki",
+    "Kannur",
+    "Kasaragod",
+    "Kollam",
+    "Kottayam",
+    "Kozhikode",
+    "Malappuram",
+    "Palakkad",
+    "Pathanamthitta",
+    "Thiruvananthapuram",
+    "Thrissur",
+    "Wayanad",
+  ];
+
   // Render
   return (
     <main>
@@ -195,22 +212,13 @@ const Register = ({ setShowAlertModal, setIsRegistered }) => {
                       defaultValue=""
                       onChange={handleChange}
                     >
-                      <MenuItem value="Alappuzha">Alappuzha</MenuItem>
-                      <MenuItem value="Ernakulam">Ernakulam</MenuItem>
-                      <MenuItem value="Idukki">Idukki</MenuItem>
-                      <MenuItem value="Kannur">Kannur</MenuItem>
-                      <MenuItem value="Kasaragod">Kasaragod</MenuItem>
-                      <MenuItem value="Kollam">Kollam</MenuItem>
-                      <MenuItem value="Kottayam">Kottayam</MenuItem>
-                      <MenuItem value="Kozhikode">Kozhikode</MenuItem>
-                      <MenuItem value="Malappuram">Malappuram</MenuItem>
-                      <MenuItem value="Palakkad">Palakkad</MenuItem>
-                      <MenuItem value="Pathanamthitta">Pathanamthitta</MenuItem>
-                      <MenuItem value="Thiruvananthapuram">
-                        Thiruvananthapuram
-                      </MenuItem>
-                      <MenuItem value="Thrissur">Thrissur</MenuItem>
-                      <MenuItem value="Wayanad">Wayanad</MenuItem>
+                      {districtValues.map((district, i) => {
+                        return (
+                          <MenuItem value={district} key={i}>
+                            {district}
+                          </MenuItem>
+                        );
+                      })}
                     </Select>
                   </FormControl>
                 </Grid>

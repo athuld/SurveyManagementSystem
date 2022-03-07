@@ -10,7 +10,7 @@ const SurveyTab = ({ surveyDetails }) => {
         <span className="survey-description">{surveyDetails.description}</span>
       </div>
 
-      {surveyDetails.questions.map((question, idx) => (
+      {surveyDetails.questions?.map((question, idx) => (
         <Fragment key={`${question}~${idx}`}>
           <div className="survey-tab-block">
             <span className={`survey-question-${question.required}`}>

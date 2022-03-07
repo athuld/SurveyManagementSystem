@@ -13,8 +13,16 @@ const verify = require("./verifyToken");
  */
 
 router.post("/add", verify, async (req, res) => {
-  const { title, description, questions } = req.body.data;
-  const survey = new Surveys({ title, description, questions });
+  const { title, description, district, gender, age, questions } =
+    req.body.data;
+  const survey = new Surveys({
+    title,
+    description,
+    district,
+    gender,
+    age,
+    questions,
+  });
   try {
     await survey.save();
     res.status(200).json({ message: "Survey added" });

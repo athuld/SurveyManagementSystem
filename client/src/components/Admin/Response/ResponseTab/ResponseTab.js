@@ -85,6 +85,11 @@ const ResponseTab = ({
             </FormGroup>
           </FormControl>
         </div>
+      <div className="filter-section">
+      <span><span className="filter-text">District : </span>{surveyDetails.district}</span>
+      <span><span className="filter-text">Gender : </span>{surveyDetails.gender}</span>
+      <span><span className="filter-text">Age : </span>{surveyDetails.age}</span>
+      </div>
         <div className="tab-container">
           <Tabs
             indicatorColor="primary"
