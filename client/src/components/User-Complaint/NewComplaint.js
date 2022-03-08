@@ -41,7 +41,7 @@ const NewComplaint = ({ headers, setIsOpen, setTabValue, setMainHeading }) => {
 
   useEffect(() => {
     setMainHeading("Complaints Hub");
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="new-comp-container">

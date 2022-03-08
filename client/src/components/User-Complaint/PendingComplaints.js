@@ -24,7 +24,7 @@ const PendingComplaints = ({ headers, setMainHeading }) => {
   useEffect(() => {
     setMainHeading("Pending Complaints");
     getPendingData();
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   if (pendingData.length === 0) {
     return (

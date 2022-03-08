@@ -31,7 +31,7 @@ function ResolvedComplaints({ headers, setMainHeading }) {
   useEffect(() => {
     setMainHeading("Resolved Complaints");
     getresolvedData();
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   if (resolvedData.length === 0) {
     return (

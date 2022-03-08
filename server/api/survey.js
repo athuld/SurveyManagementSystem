@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Response = require("../models/responseModel");
 const Surveys = require("../models/surveyModel");
 const verify = require("./verifyToken");
+const User = require("../models/userModel");
 
 /**
  * ADD NEW SURVEYS
@@ -51,9 +52,9 @@ router.delete("/:surveyId", verify, async (req, res) => {
 });
 
 /**
- * RETURN ALL SURVEYS
+ * RETURN SURVEYS
  *
- * Can be used to get all the surveys
+ * Can be used to get all the surveys / survey for users
  *
  * ROUTE: PRIVATE
  * URL = /api/admin/survey/fetch
@@ -61,12 +62,23 @@ router.delete("/:surveyId", verify, async (req, res) => {
 
 router.get("/fetch/", verify, async (req, res) => {
   try {
-    const surveyDetails = await Surveys.find({}).sort({ createdAt: -1 });
-    if (surveyDetails.length === 0) {
-      res.status(200).json({ message: "no records" });
+    let surveyDetails = [];
+    const user = await User.findOne({ _id: req.user._id });
+
+    if (user.email === "admin@survey.com") {
+      surveyDetails = await Surveys.find({}).sort({ createdAt: -1 });
     } else {
-      res.json(surveyDetails);
+      surveyDetails = await Surveys.find({
+        $and: [
+          { $or: [{ district: user.district }, { district: "All" }] },
+          { isAcceptingResponse: true },
+        ],
+      }).sort({ createdAt: -1 });
     }
+
+    surveyDetails.length === 0
+      ? res.status(200).json({ message: "no records" })
+      : res.json(surveyDetails);
   } catch (err) {
     res.status(400).json(err);
   }
