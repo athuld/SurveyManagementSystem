@@ -91,6 +91,9 @@ router.post("/members/add/", verify, (req, res) => {
     memberAge--;
   }
 
+  // Age category
+  let ageCategory;
+
   // Assign Avatar
   const getAvatar = () => {
     if (relationship === "grandmother") {
@@ -99,7 +102,8 @@ router.post("/members/add/", verify, (req, res) => {
     if (relationship === "grandfather") {
       return "grandpa.png";
     }
-    if (memberAge >= 60) {
+    if (memberAge >= 50) {
+      ageCategory = "above 50";
       if (
         relationship === "brother" ||
         relationship === "father" ||
@@ -110,6 +114,7 @@ router.post("/members/add/", verify, (req, res) => {
       return "grandma.png";
     }
     if (memberAge >= 30) {
+      ageCategory = "above 30";
       if (
         relationship === "brother" ||
         relationship === "father" ||
@@ -120,6 +125,7 @@ router.post("/members/add/", verify, (req, res) => {
       return "woman.png";
     }
     if (memberAge >= 18) {
+      ageCategory = "above 18";
       if (
         relationship === "brother" ||
         relationship === "father" ||
@@ -129,6 +135,7 @@ router.post("/members/add/", verify, (req, res) => {
       }
       return "teengirl.png";
     } else {
+      ageCategory = "below 18";
       if (relationship === "brother") {
         return "boy.png";
       }
@@ -136,13 +143,16 @@ router.post("/members/add/", verify, (req, res) => {
     }
   };
 
+  const avatar = getAvatar();
+
   const memberDetails = new User({
     firstName,
     lastName,
     relationship,
     dob,
     age: memberAge,
-    avatar: getAvatar(),
+    ageCategory,
+    avatar,
   });
 
   if (userId) {

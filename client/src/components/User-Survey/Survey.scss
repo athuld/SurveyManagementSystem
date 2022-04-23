@@ -55,3 +55,24 @@
   color: $color-primary;
   text-align: center;
 }
+
+#survey-dialog{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 40vw;
+    p{
+        font-size: 1em;
+    }
+}
+#user-respond-select{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+    flex-direction: column;
+    p{
+        font-size: 0.8em;
+        margin-top: 1em;
+    }
+}

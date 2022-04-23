@@ -18,9 +18,10 @@ router.post("/register", async (req, res) => {
 
   //Check if the user exist //
   const emailExist = await User.findOne({ email });
-  if (emailExist)
+  if (emailExist) {
+    console.log("in exist");
     return res.status(400).json({ message: "Email already exist" });
-
+  }
   // Hash the password //
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
@@ -34,32 +35,41 @@ router.post("/register", async (req, res) => {
     userAge--;
   }
 
+  // Age category
+  let ageCategory;
+
   // Assign Avatar
   const getAvatar = () => {
-    if (userAge >= 60) {
+    if (userAge >= 50) {
+      ageCategory = "above 50";
       if (gender === "Male") {
         return "grandpa.png";
       }
       return "grandma.png";
     }
     if (userAge >= 30) {
+      ageCategory = "above 30";
       if (gender === "Male") {
         return "man.png";
       }
       return "woman.png";
     }
     if (userAge >= 18) {
+      ageCategory = "above 18";
       if (gender === "Male") {
         return "teenboy.png";
       }
       return "teengirl.png";
     } else {
+      ageCategory = "below 18";
       if (gender === "Male") {
         return "boy.png";
       }
       return "girl.png";
     }
   };
+
+  const avatar = getAvatar();
 
   // Create New User //
   const user = new User({
@@ -69,9 +79,10 @@ router.post("/register", async (req, res) => {
     gender,
     dob,
     age: userAge,
+    ageCategory,
     password: hashedPassword,
     district,
-    avatar: getAvatar(),
+    avatar,
   });
   try {
     const savedUser = await user.save();

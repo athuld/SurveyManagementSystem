@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  ageCategory: {
+    type: String,
+    required: true,
+  },
   password: {
     type: String,
     required: true,
@@ -66,6 +70,10 @@ const userSchema = new mongoose.Schema({
       },
       age: {
         type: Number,
+        required: true,
+      },
+      ageCategory: {
+        type: String,
         required: true,
       },
       avatar: {

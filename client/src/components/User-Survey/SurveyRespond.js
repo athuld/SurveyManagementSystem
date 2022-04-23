@@ -1,6 +1,6 @@
 import "./Respond.scss";
 import { useEffect, useState, Fragment } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import {
   Radio,
@@ -11,10 +11,12 @@ import {
 } from "@material-ui/core";
 import NavBar from "../NavBar/NavBar";
 import RegularLoading from "../Loading/RegularLoading";
-import Helmet from "react-helmet"
+import Helmet from "react-helmet";
 
 const SurveyRespond = ({ setIsOpen }) => {
   const { surveyId } = useParams();
+  const location = useLocation();
+  const userId = location.state.userId;
   const [surveyDetails, setSurveyDetails] = useState({});
   const [response, setResponse] = useState([]);
   const history = useHistory();
@@ -47,16 +49,22 @@ const SurveyRespond = ({ setIsOpen }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const responseData = { surveyId, responses: response };
-    const res = await axios.post(
-      `${process.env.REACT_APP_URL}/api/admin/survey/response`,
-      {
-        data: responseData,
-      }
-    );
-    setIsOpen(true);
-    history.push("/user/surveys");
-    console.log(res.data.message);
+    const responseData = { surveyId, userId, responses: response };
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_URL}/api/admin/survey/response`,
+        {
+          data: responseData,
+        }
+      );
+      await axios.post(
+        `${process.env.REACT_APP_URL}/api/survey/response/user/update_count/${userId}`
+      );
+      setIsOpen(true);
+      history.push("/user/surveys");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   if (
@@ -73,7 +81,7 @@ const SurveyRespond = ({ setIsOpen }) => {
 
   return (
     <main>
-    <Helmet bodyAttributes={{style: 'background-color : #d8f4f9'}}/>
+      <Helmet bodyAttributes={{ style: "background-color : #d8f4f9" }} />
       <NavBar user={true} />
       <form onSubmit={handleSubmit}>
         <div className="response-block header">

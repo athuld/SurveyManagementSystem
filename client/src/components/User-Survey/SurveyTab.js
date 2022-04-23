@@ -1,5 +1,4 @@
 import { useState, useEffect, Fragment } from "react";
-import { useHistory } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import NavBar from "../NavBar/NavBar";
 import { Create } from "@material-ui/icons";
@@ -11,16 +10,22 @@ import Cookie from "js-cookie";
 import Notification from "../AlertModal/Notification";
 import RegularLoading from "../Loading/RegularLoading";
 import NoRecords from "../NoRecords/NoRecords";
+import UserDialog from "./UserDialog";
 
 const SurveyTab = ({ isOpen, setIsOpen }) => {
   document.title = "Surveys";
 
-  const history = useHistory();
-
   const [surveys, setSurveys] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedSurvey, setSelectedSurvey] = useState({});
 
   const headers = {
     autherisation: `Bearer ${Cookie.get("accessToken")}`,
+  };
+
+  const handleDialogOpen = (survey) => {
+    setSelectedSurvey(survey);
+    setDialogOpen(true);
   };
 
   const getSurveys = async () => {
@@ -92,11 +97,7 @@ const SurveyTab = ({ isOpen, setIsOpen }) => {
                   <Button
                     variant="contained"
                     id="respond-btn"
-                    onClick={() =>
-                      history.push({
-                        pathname: `/user/surveys/respond/${survey._id}`,
-                      })
-                    }
+                    onClick={() => handleDialogOpen(survey)}
                     startIcon={<Create />}
                   >
                     Respond
@@ -107,6 +108,11 @@ const SurveyTab = ({ isOpen, setIsOpen }) => {
           </div>
         </Fragment>
       ))}
+      <UserDialog
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
+        selectedSurvey={selectedSurvey}
+      />
     </div>
   );
 };

@@ -6,6 +6,10 @@ const responseSchema = new mongoose.Schema({
     type: ObjectId,
     required: true,
   },
+  userId: {
+    type: ObjectId,
+    required: true,
+  },
   responses: [
     {
       questionId: {
