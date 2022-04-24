@@ -3,6 +3,7 @@ const Response = require("../models/responseModel");
 const Surveys = require("../models/surveyModel");
 const verify = require("./verifyToken");
 const User = require("../models/userModel");
+const mongoose = require("mongoose");
 
 /**
  * ADD NEW SURVEYS
@@ -113,7 +114,22 @@ router.get("/:surveyId", async (req, res) => {
 
 router.post("/response", async (req, res) => {
   try {
-    const responseData = new Response(req.body.data);
+    const data = req.body.data;
+    const userData = await User.findOne({ _id: data.userId });
+    let ageCategory, gender;
+    if (userData != null) {
+      gender = userData.gender;
+      ageCategory = userData.ageCategory;
+    } else {
+      let memberData = await User.aggregate([
+        { $unwind: "$members" },
+        { $match: { "members._id": mongoose.Types.ObjectId(data.userId) } },
+      ]);
+      ageCategory = memberData[0].members.ageCategory;
+      gender = memberData[0].members.gender;
+    }
+    const finalData = { gender, ageCategory, ...data };
+    const responseData = new Response(finalData);
     await responseData.save();
     res.status(200).json({ message: "response recorded" });
   } catch (err) {

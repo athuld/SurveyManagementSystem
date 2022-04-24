@@ -117,3 +117,38 @@
   font-weight: 600;
   color: $color-dark;
 }
+
+.report-container {
+    width: 60vw;
+    margin: 0 auto;
+}
+
+.report-header{
+    width: 60vw;
+    background-color: #fffefe;
+    border-radius: 0.5em;
+    padding: 0.6em 1.5em;
+    margin-bottom: 1em;
+}
+
+.generate-cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.6em;
+}
+
+.generate-btn{
+    display: inline-block;
+    padding: 1.1em 2.5em;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.5em;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+    background-color: rgb(144,202,249);
+    color: black;
+}
+
+.generate-btn:hover{
+    box-shadow: 0 3.5px 3.5px rgba(0, 0, 0, 0.25);
+}

@@ -16,7 +16,7 @@ import Helmet from "react-helmet";
 const SurveyRespond = ({ setIsOpen }) => {
   const { surveyId } = useParams();
   const location = useLocation();
-  const userId = location.state.userId;
+  const { userId, district } = location.state;
   const [surveyDetails, setSurveyDetails] = useState({});
   const [response, setResponse] = useState([]);
   const history = useHistory();
@@ -49,7 +49,7 @@ const SurveyRespond = ({ setIsOpen }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const responseData = { surveyId, userId, responses: response };
+    const responseData = { surveyId, userId, district, responses: response };
     try {
       await axios.post(
         `${process.env.REACT_APP_URL}/api/admin/survey/response`,

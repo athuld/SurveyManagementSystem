@@ -71,6 +71,7 @@ const UserDialog = ({ dialogOpen, setDialogOpen, selectedSurvey }) => {
           pathname: `/user/surveys/respond/${survey._id}`,
           state: {
             userId: selectedUser,
+            district: userDetails.district
           },
         });
       } else {

@@ -91,4 +91,32 @@ router.post("/user/update_count/:userId", async (req, res) => {
   }
 });
 
+/**
+ * GET FILTERED RESPONSES
+ *
+ * Retrun filtered responses to admin according to params
+ *
+ * ROUTE: PUBLIC
+ * URL = /api/survey/response/admin/fetch/?distict&gender&age
+ */
+router.get("/admin/fetch", async (req, res) => {
+  const { surveyId, district, gender, age } = req.query;
+  try {
+    let query = { surveyId, district, gender, ageCategory: age };
+    if (district === "All") {
+      delete query.district;
+    }
+    if (gender === "All") {
+      delete query.gender;
+    }
+    if (age === "All") {
+      delete query.ageCategory;
+    }
+    const data = await Response.find(query);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(400).json({ message: "error" });
+  }
+});
+
 module.exports = router;

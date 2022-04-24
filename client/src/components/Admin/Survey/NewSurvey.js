@@ -98,7 +98,6 @@ const NewSurvey = ({ setIsOpen, setNotification }) => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    console.log(filterData);
   };
 
   return (

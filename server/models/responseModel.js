@@ -10,6 +10,19 @@ const responseSchema = new mongoose.Schema({
     type: ObjectId,
     required: true,
   },
+  district: {
+    type: String,
+    required: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+  },
+  ageCategory: {
+    type: String,
+    required: true,
+  },
+
   responses: [
     {
       questionId: {

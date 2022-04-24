@@ -93,13 +93,15 @@ router.post("/members/add/", verify, (req, res) => {
 
   // Age category
   let ageCategory;
-
+  let gender;
   // Assign Avatar
   const getAvatar = () => {
     if (relationship === "grandmother") {
+      gender = "Female";
       return "grandma.png";
     }
     if (relationship === "grandfather") {
+      gender = "Male";
       return "grandpa.png";
     }
     if (memberAge >= 50) {
@@ -109,8 +111,10 @@ router.post("/members/add/", verify, (req, res) => {
         relationship === "father" ||
         relationship === "husband"
       ) {
+        gender = "Male";
         return "grandpa.png";
       }
+      gender = "Female";
       return "grandma.png";
     }
     if (memberAge >= 30) {
@@ -120,8 +124,10 @@ router.post("/members/add/", verify, (req, res) => {
         relationship === "father" ||
         relationship === "husband"
       ) {
+        gender = "Male";
         return "man.png";
       }
+      gender = "Female";
       return "woman.png";
     }
     if (memberAge >= 18) {
@@ -131,14 +137,18 @@ router.post("/members/add/", verify, (req, res) => {
         relationship === "father" ||
         relationship === "husband"
       ) {
+        gender = "Male";
         return "teenboy.png";
       }
+      gender = "Female";
       return "teengirl.png";
     } else {
       ageCategory = "below 18";
       if (relationship === "brother") {
+        gender = "Male";
         return "boy.png";
       }
+      gender = "Female";
       return "girl.png";
     }
   };
@@ -152,6 +162,7 @@ router.post("/members/add/", verify, (req, res) => {
     dob,
     age: memberAge,
     ageCategory,
+    gender,
     avatar,
   });
 

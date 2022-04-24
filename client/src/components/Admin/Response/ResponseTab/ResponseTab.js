@@ -12,6 +12,7 @@ import Summary from "./Summary";
 import Report from "./Report";
 import axios from "axios";
 import Notification from "../../../AlertModal/Notification";
+import NoRecords from "../../../NoRecords/NoRecords";
 
 const ResponseTab = ({
   surveyId,
@@ -85,11 +86,20 @@ const ResponseTab = ({
             </FormGroup>
           </FormControl>
         </div>
-      <div className="filter-section">
-      <span><span className="filter-text">District : </span>{surveyDetails.district}</span>
-      <span><span className="filter-text">Gender : </span>{surveyDetails.gender}</span>
-      <span><span className="filter-text">Age : </span>{surveyDetails.age}</span>
-      </div>
+        <div className="filter-section">
+          <span>
+            <span className="filter-text">District : </span>
+            {surveyDetails.district}
+          </span>
+          <span>
+            <span className="filter-text">Gender : </span>
+            {surveyDetails.gender}
+          </span>
+          <span>
+            <span className="filter-text">Age : </span>
+            {surveyDetails.age}
+          </span>
+        </div>
         <div className="tab-container">
           <Tabs
             indicatorColor="primary"
@@ -102,10 +112,13 @@ const ResponseTab = ({
           </Tabs>
         </div>
       </div>
-      {tabValue === 0 && (
-        <Summary responseData={responseData} surveyDetails={surveyDetails} />
-      )}
-      {tabValue === 1 && <Report />}
+      {tabValue === 0 &&
+        (responseData.length === 0 ? (
+          <NoRecords message={"No Responses Received"} />
+        ) : (
+          <Summary responseData={responseData} surveyDetails={surveyDetails} />
+        ))}
+      {tabValue === 1 && <Report surveyDetails={surveyDetails} />}
     </section>
   );
 };

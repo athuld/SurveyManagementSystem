@@ -56,7 +56,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, surveys.length - page * rowsPerPage);
   const [searched, setSearched] = useState("");
-    const [resData,setResData] = useState("")
+  const [resData, setResData] = useState("");
 
   const headers = {
     autherisation: `Bearer ${Cookie.get("accessToken")}`,
@@ -104,7 +104,7 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
         `${process.env.REACT_APP_URL}/api/admin/survey/fetch`,
         { headers }
       );
-    setResData(res.data)
+      setResData(res.data);
       const values = [...res.data];
       for (let i = 0; i < values.length; i++) {
         const res = await axios.get(
