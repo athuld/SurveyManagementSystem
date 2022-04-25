@@ -41,9 +41,33 @@ router.get("/get", verify, async (req, res) => {
   const isAdmin = user.email === "admin@survey.com" ? true : false;
   try {
     if (isAdmin) {
-      const complaints = await Complaint.find();
+      let query;
+      let initRender = true;
+      if (Object.keys(req.query).length === 0) {
+        query = {};
+      } else {
+        initRender = false;
+        const { urgency, area, status } = req.query;
+        query = {
+          "complaintBody.urgency": urgency,
+          "complaintBody.area": area,
+          "complaintRes.status": status,
+        };
+        if (urgency === "All") {
+          delete query["complaintBody.urgency"];
+        }
+        if (area === "All") {
+          delete query["complaintBody.area"];
+        }
+        if (status === "All") {
+          delete query["complaintRes.status"];
+        }
+      }
+      const complaints = await Complaint.find(query);
       if (complaints.length === 0) {
-        res.status(200).json({ message: "no records" });
+        initRender
+          ? res.status(200).json({ message: "no records" })
+          : res.status(200).json({ message: "no filter records" });
       } else {
         res.status(200).json(complaints);
       }

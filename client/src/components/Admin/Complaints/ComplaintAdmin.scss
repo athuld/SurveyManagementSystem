@@ -127,22 +127,59 @@ body {
   min-width: 17vw;
   border-radius: 0.5em;
   background-color: #fffefe;
-  padding: 0.5em 0 0.5em 0;
+  padding: 0.5em;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
 
   span {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 600;
     letter-spacing: 1px;
     color: $color-dark;
+    margin-left: 0.5em;
   }
 }
 
 #all-complaint-avatar {
   background-color: $color-primary;
+}
+
+.complaint-report-btn{
+    display: flex;
+    padding: 1em 1.5em;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 0.5em;
+    background-color: $color-seconday;
+    color:$color-dark;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 0.8em;
+
+    &:hover{
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+    }
+
+}
+
+.excel-btn{
+    padding: 0.5em 1em;
+    background-color: #E9E9E9;
+}
+
+#excel-btn-grid{
+    margin-left: 2em;
+}
+
+
+#filter-complaint-grid{
+    margin-top: 0.8em;
+    min-width: 76vw;
 }
 
 #Pending-chip {
@@ -159,10 +196,6 @@ body {
   min-width: 40vw;
 }
 
-// .complaint-info {
-//   display: flex;
-//   flex-direction: column;
-// }
 .header-info {
   font-size: 0.8em;
 }

@@ -66,9 +66,7 @@ const ResolveCard = ({
 
   if (Object.keys(resolveComplaint).length === 0) {
     return (
-      <div className="initial-select">
-        <span>Fetching complaint info</span>
-      </div>
+        null
     );
   }
 

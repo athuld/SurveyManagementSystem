@@ -14,9 +14,14 @@ import {
   TableFooter,
   Avatar,
   Chip,
+  Grid,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@material-ui/core";
 import {
-  PeopleAltTwoTone,
+  BookTwoTone,
   Loop,
   CheckCircleOutlineRounded,
 } from "@material-ui/icons";
@@ -29,13 +34,15 @@ import Notification from "../../AlertModal/Notification";
 import { format, parseISO } from "date-fns";
 import "./ComplaintAdmin.scss";
 import ResolveCard from "./ResolveCard";
-import NoRecords from "../../NoRecords/NoRecords"
+import NoRecords from "../../NoRecords/NoRecords";
+import ComplaintExport from "./ComplaintExport";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
+    width: "80vw",
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
   },
@@ -62,13 +69,18 @@ const ComplaintAdmin = ({
     title: "",
   });
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [rowsPerPage, setRowsPerPage] = useState(7);
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, complaints.length - page * rowsPerPage);
   const [searched, setSearched] = useState("");
   const [resolveOpen, setResolveOpen] = useState(false);
   const [resolveComplaint, setResolveComplaint] = useState("");
   const [isResolved, setIsResolved] = useState(false);
+  const [filterData, setFilterData] = useState({
+    urgency: "All",
+    area: "All",
+    status: "All",
+  });
 
   const headers = {
     autherisation: `Bearer ${Cookie.get("accessToken")}`,
@@ -121,7 +133,6 @@ const ComplaintAdmin = ({
       );
       setComplaints(res.data);
       setSearchData(res.data);
-      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -186,6 +197,34 @@ const ComplaintAdmin = ({
     setResolveOpen(true);
   };
 
+  const handleFilterChange = (e) => {
+    setFilterData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+    console.log(filterData);
+  };
+
+  const handleFilterAction = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_URL}/api/admin/complaint/get`,
+        {
+          headers,
+          params: {
+            urgency: filterData.urgency,
+            area: filterData.area,
+            status: filterData.status,
+          },
+        }
+      );
+      setComplaints(res.data);
+      setSearchData(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   if (searchData.length === 0) {
     return <BackdropLoading />;
   }
@@ -199,7 +238,7 @@ const ComplaintAdmin = ({
             <div className="header-bar">
               <div className="all-complaint-container">
                 <Avatar id="all-complaint-avatar">
-                  <PeopleAltTwoTone />
+                  <BookTwoTone />
                 </Avatar>
                 <span>All complaints</span>
               </div>
@@ -225,133 +264,200 @@ const ComplaintAdmin = ({
           <div className="header-bar">
             <div className="all-complaint-container">
               <Avatar id="all-complaint-avatar">
-                <PeopleAltTwoTone />
+                <BookTwoTone />
               </Avatar>
-              <span>All complaints</span>
+              <span>All Complaints</span>
             </div>
-
-            <SearchBar
-              id="complaint-search-bar"
-              value={searched}
-              onChange={(searchVal) => requestSearch(searchVal)}
-              onCancelSearch={() => cancelSearch()}
-            />
+            {complaints.message != "no filter records" ? (
+              <SearchBar
+                id="complaint-search-bar"
+                value={searched}
+                onChange={(searchVal) => requestSearch(searchVal)}
+                onCancelSearch={() => cancelSearch()}
+              />
+            ) : null}
           </div>
-          <TableContainer component={Paper} id="table-container">
-            <Table
-              className={classes.table}
-              size="small"
-              aria-label="simple table"
-            >
-              <TableHead id="table-head">
-                <TableRow>
-                  <TableCell id="table-cell" align="center">
-                    Date
-                  </TableCell>
-                  <TableCell id="table-cell" align="left">
-                    Subject
-                  </TableCell>
-                  <TableCell id="table-cell" align="left">
-                    Urgency
-                  </TableCell>
-                  <TableCell id="table-cell" align="left">
-                    Area
-                  </TableCell>
-                  <TableCell id="table-cell" align="center">
-                    Status
-                  </TableCell>
-                  <TableCell id="table-cell" align="center">
-                    Actions
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {complaints
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((complaint) => (
-                    <TableRow key={complaint._id}>
-                      <TableCell align="center">
-                        {format(parseISO(complaint.date), "dd/MM/yyyy")}
-                      </TableCell>
-                      <TableCell align="left">
-                        {complaint.complaintBody.subject}
-                      </TableCell>
-                      <TableCell align="left">
-                        {complaint.complaintBody.urgency}
-                      </TableCell>
-                      <TableCell align="left">
-                        {complaint.complaintBody.area}
-                      </TableCell>
-                      <TableCell align="center">
-                        {complaint.complaintRes.status === "Resolved" ? (
-                          <Chip
-                            icon={<CheckCircleOutlineRounded />}
-                            label="Resolved"
-                            size="small"
-                            id="Resolved-chip"
-                          />
-                        ) : (
-                          <Chip
-                            icon={<Loop />}
-                            label="Pending"
-                            size="small"
-                            id="Pending-chip"
-                          />
-                        )}
-                      </TableCell>
-                      <TableCell align="center">
-                        <Button
-                          id="view-btn"
-                          variant="contained"
-                          color="primary"
-                          style={{ fontSize: ".6em" }}
-                          onClick={() => handleResolveView(complaint)}
-                        >
-                          View
-                        </Button>{" "}
-                        <Button
-                          variant="contained"
-                          // id={`${complaint._id}-title`}
-                          id="delete-btn"
-                          style={{ fontSize: ".6em" }}
-                          onClick={() =>
-                            handleOpen(
-                              complaint._id,
-                              complaint.complaintBody.subject,
-                              `${complaint.complaintBody.area} with ${
-                                complaint.complaintBody.urgency
-                              } urgency filed on ${format(
-                                parseISO(complaint.date),
-                                "dd/MM/yyyy"
-                              )}`
-                            )
-                          }
-                        >
-                          Delete
-                        </Button>{" "}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 44 * emptyRows }}>
-                    <TableCell colSpan={6} />
+          <Grid container spacing={2} id="filter-complaint-grid">
+            <Grid item xs={12} sm={2}>
+              <FormControl variant="filled" fullWidth margin="dense" required>
+                <InputLabel id="urgency">Urgency</InputLabel>
+                <Select
+                  defaultValue="All"
+                  labelId="urgency"
+                  name="urgency"
+                  onClick={handleFilterChange}
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="Moderate">Moderate</MenuItem>
+                  <MenuItem value="Severe">Severe</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <FormControl variant="filled" fullWidth margin="dense" required>
+                <InputLabel id="area">Area</InputLabel>
+                <Select
+                  defaultValue="All"
+                  labelId="area"
+                  name="area"
+                  onClick={handleFilterChange}
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="Public Service">Public Service</MenuItem>
+                  <MenuItem value="COVID">COVID</MenuItem>
+                  <MenuItem value="Medical">Medical</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <FormControl variant="filled" fullWidth margin="dense" required>
+                <InputLabel id="status">Status</InputLabel>
+                <Select
+                  defaultValue="All"
+                  labelId="status"
+                  onClick={handleFilterChange}
+                  name="status"
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value="Resolved">Resolved</MenuItem>
+                  <MenuItem value="Pending">Pending</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={1}>
+              <button
+                className="complaint-report-btn"
+                onClick={handleFilterAction}
+              >
+                Filter
+              </button>
+            </Grid>
+            <Grid item xs={12} sm={2} id="excel-btn-grid">
+              {complaints.message === "no filter records" ? null : (
+                <ComplaintExport complaints={complaints} />
+              )}
+            </Grid>
+          </Grid>
+          {complaints.message === "no filter records" ? (
+            <NoRecords message={"No Complaints Found"} />
+          ) : (
+            <TableContainer component={Paper} id="table-container">
+              <Table
+                className={classes.table}
+                size="small"
+                aria-label="simple table"
+              >
+                <TableHead id="table-head">
+                  <TableRow>
+                    <TableCell id="table-cell" align="center">
+                      Date
+                    </TableCell>
+                    <TableCell id="table-cell" align="left">
+                      Subject
+                    </TableCell>
+                    <TableCell id="table-cell" align="left">
+                      Urgency
+                    </TableCell>
+                    <TableCell id="table-cell" align="left">
+                      Area
+                    </TableCell>
+                    <TableCell id="table-cell" align="center">
+                      Status
+                    </TableCell>
+                    <TableCell id="table-cell" align="center">
+                      Actions
+                    </TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    rowsPerPageOptions={[4, 5, 6, 8]}
-                    count={complaints.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {complaints
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((complaint) => (
+                      <TableRow key={complaint._id}>
+                        <TableCell align="center">
+                          {format(parseISO(complaint.date), "dd/MM/yyyy")}
+                        </TableCell>
+                        <TableCell align="left">
+                          {complaint.complaintBody.subject}
+                        </TableCell>
+                        <TableCell align="left">
+                          {complaint.complaintBody.urgency}
+                        </TableCell>
+                        <TableCell align="left">
+                          {complaint.complaintBody.area}
+                        </TableCell>
+                        <TableCell align="center">
+                          {complaint.complaintRes.status === "Resolved" ? (
+                            <Chip
+                              icon={<CheckCircleOutlineRounded />}
+                              label="Resolved"
+                              size="small"
+                              id="Resolved-chip"
+                            />
+                          ) : (
+                            <Chip
+                              icon={<Loop />}
+                              label="Pending"
+                              size="small"
+                              id="Pending-chip"
+                            />
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Button
+                            id="view-btn"
+                            variant="contained"
+                            color="primary"
+                            style={{ fontSize: ".6em" }}
+                            onClick={() => handleResolveView(complaint)}
+                          >
+                            View
+                          </Button>{" "}
+                          <Button
+                            variant="contained"
+                            // id={`${complaint._id}-title`}
+                            id="delete-btn"
+                            style={{ fontSize: ".6em" }}
+                            onClick={() =>
+                              handleOpen(
+                                complaint._id,
+                                complaint.complaintBody.subject,
+                                `${complaint.complaintBody.area} with ${
+                                  complaint.complaintBody.urgency
+                                } urgency filed on ${format(
+                                  parseISO(complaint.date),
+                                  "dd/MM/yyyy"
+                                )}`
+                              )
+                            }
+                          >
+                            Delete
+                          </Button>{" "}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 44 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[4, 5, 6, 7]}
+                      count={complaints.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onChangePage={handleChangePage}
+                      onChangeRowsPerPage={handleChangeRowsPerPage}
+                    />
+                  </TableRow>
+                </TableFooter>
+              </Table>
+            </TableContainer>
+          )}
           <ConfirmDelete
             dialogDetails={dialogDetails}
             open={open}
