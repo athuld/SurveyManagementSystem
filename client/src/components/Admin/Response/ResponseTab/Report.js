@@ -11,6 +11,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Summary from "./Summary";
 import NoRecords from "../../../NoRecords/NoRecords";
+import ReportExport from "./ReportExport";
 
 const Report = ({ surveyDetails }) => {
   const { surveyId } = useParams();
@@ -73,7 +74,7 @@ const Report = ({ surveyDetails }) => {
       <div className="report-header">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={3}>
-            <FormControl variant="filled" fullWidth margin="dense" required>
+            <FormControl variant="outlined" fullWidth margin="dense" required>
               <InputLabel id="district">District</InputLabel>
               <Select
                 labelId="select-district"
@@ -94,7 +95,7 @@ const Report = ({ surveyDetails }) => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={3}>
-            <FormControl variant="filled" fullWidth margin="dense" required>
+            <FormControl variant="outlined" fullWidth margin="dense" required>
               <InputLabel id="gender">Gender</InputLabel>
               <Select
                 labelId="select-gender"
@@ -112,7 +113,7 @@ const Report = ({ surveyDetails }) => {
           </Grid>
 
           <Grid item xs={12} sm={3}>
-            <FormControl variant="filled" fullWidth margin="dense" required>
+            <FormControl variant="outlined" fullWidth margin="dense" required>
               <InputLabel id="age">Age</InputLabel>
               <Select
                 labelId="select-age"
@@ -130,13 +131,21 @@ const Report = ({ surveyDetails }) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={2}>
             <div className="generate-cont">
               <button className="generate-btn" onClick={handleGenerate}>
                 Generate
               </button>
             </div>
           </Grid>
+          {!showResult ? null : responseData.length === 0 ? null : (
+            <Grid item xs={12} sm={1}>
+              <ReportExport
+                responseData={responseData}
+                surveyDetails={surveyDetails}
+              />
+            </Grid>
+          )}
         </Grid>
       </div>
       {!showResult ? null : responseData.length === 0 ? (

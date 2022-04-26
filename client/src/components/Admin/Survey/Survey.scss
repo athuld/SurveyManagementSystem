@@ -1,6 +1,6 @@
 @import "../../../main.scss";
 
-$color-btn: #65d2aa;
+$color-btn: #70c7a7;
 body {
     background-color: #fafafa;
 }
@@ -9,20 +9,20 @@ body {
     margin-left: 17rem;
 }
 
-.new-btn {
+.new-survey-btn {
     display: inline-block;
-    padding: 0.7em 1em;
-    border: 2px solid $color-btn;
-    color: $color-btn;
+    padding: 0.8em 1.5em;
+    border: none;
+    color: $color-light;
+    background-color: $color-btn;
     border-radius: 0.5em;
     font-size: 1em;
     font-weight: 600;
-    background-color: #eafff7;
     cursor: pointer;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 
     &:hover {
-        background-color: $color-btn;
-        color: #fafafa;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
     }
 }
 
@@ -134,7 +134,7 @@ body {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
 
     span {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         font-weight: 600;
         letter-spacing: 1px;
         color: $color-dark;

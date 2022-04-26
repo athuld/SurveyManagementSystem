@@ -1,11 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Home,
-  Assignment,
-  ConfirmationNumber,
-  Feedback,
-  People,
+  HomeTwoTone,
+  AssignmentTwoTone,
+  FeedbackTwoTone,
+  PeopleTwoTone,
+  BookTwoTone,
 } from "@material-ui/icons";
 import {
   Button,
@@ -66,27 +66,27 @@ const AdminHome = () => {
   const navItems = [
     {
       text: "Home",
-      icon: <Home />,
+      icon: <HomeTwoTone />,
       onClick: () => history.push("/admin"),
     },
     {
       text: "Users",
-      icon: <People />,
+      icon: <PeopleTwoTone />,
       onClick: () => history.push("/admin/users"),
     },
     {
       text: "Surveys",
-      icon: <Assignment />,
+      icon: <AssignmentTwoTone />,
       onClick: () => history.push("/admin/surveys"),
     },
     {
       text: "Complaints",
-      icon: <ConfirmationNumber />,
+      icon: <BookTwoTone />,
       onClick: () => history.push("/admin/complaints"),
     },
     {
       text: "Feedbacks",
-      icon: <Feedback />,
+      icon: <FeedbackTwoTone />,
       onClick: () => history.push("/admin/feedbacks"),
     },
   ];

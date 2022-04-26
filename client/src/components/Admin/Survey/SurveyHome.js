@@ -14,7 +14,9 @@ import {
   Button,
   TablePagination,
   TableFooter,
+  Avatar,
 } from "@material-ui/core";
+import { AssignmentTwoTone } from "@material-ui/icons";
 import SearchBar from "material-ui-search-bar";
 import Cookie from "js-cookie";
 import axios from "axios";
@@ -184,8 +186,14 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
         <div className={classes.content}>
           <main className="survey">
             <div className="header-bar">
+              <div className="all-user-container">
+                <Avatar id="all-user-avatar">
+                  <AssignmentTwoTone />
+                </Avatar>
+                <span>All Surveys</span>
+              </div>
               <button
-                className="new-btn"
+                className="new-survey-btn"
                 onClick={() => history.push("/admin/surveys/new")}
               >
                 New Survey
@@ -210,8 +218,14 @@ const SurveyHome = ({ isOpen, setIsOpen, notification, setNotification }) => {
         />
         <main className="survey">
           <div className="header-bar">
+            <div className="all-user-container">
+              <Avatar id="all-user-avatar">
+                <AssignmentTwoTone />
+              </Avatar>
+              <span>All Surveys</span>
+            </div>
             <button
-              className="new-btn"
+              className="new-survey-btn"
               onClick={() => history.push("/admin/surveys/new")}
             >
               New Survey

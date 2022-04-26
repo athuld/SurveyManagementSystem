@@ -11,7 +11,7 @@ const ComplaintExport = ({ complaints }) => {
   return (
     <ExcelFile
       element={
-        <button className="complaint-report-btn excel-btn">
+        <button className="excel-btn">
           <ExcelIcon />
         </button>
       }

@@ -148,7 +148,7 @@ body {
 
 .complaint-report-btn{
     display: flex;
-    padding: 1em 1.5em;
+    padding: 0.8em 2.5em;
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -159,7 +159,7 @@ body {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
     cursor: pointer;
     font-weight: 600;
-    margin-top: 0.8em;
+    margin-top: 0.65em;
 
     &:hover{
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
@@ -168,8 +168,13 @@ body {
 }
 
 .excel-btn{
-    padding: 0.5em 1em;
-    background-color: #E9E9E9;
+    padding: 0em 0em;
+    margin-top: 1em;
+    margin-left: 1em;
+    background-color: #fffefe;
+    border: none;
+    cursor: pointer;
+
 }
 
 #excel-btn-grid{

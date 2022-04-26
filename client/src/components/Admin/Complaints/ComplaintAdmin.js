@@ -268,7 +268,7 @@ const ComplaintAdmin = ({
               </Avatar>
               <span>All Complaints</span>
             </div>
-            {complaints.message != "no filter records" ? (
+            {complaints.message !== "no filter records" ? (
               <SearchBar
                 id="complaint-search-bar"
                 value={searched}
@@ -279,10 +279,11 @@ const ComplaintAdmin = ({
           </div>
           <Grid container spacing={2} id="filter-complaint-grid">
             <Grid item xs={12} sm={2}>
-              <FormControl variant="filled" fullWidth margin="dense" required>
+              <FormControl variant="outlined" fullWidth margin="dense" required>
                 <InputLabel id="urgency">Urgency</InputLabel>
                 <Select
                   defaultValue="All"
+                  label="Urgency"
                   labelId="urgency"
                   name="urgency"
                   onClick={handleFilterChange}
@@ -294,11 +295,12 @@ const ComplaintAdmin = ({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={2}>
-              <FormControl variant="filled" fullWidth margin="dense" required>
+              <FormControl variant="outlined" fullWidth margin="dense" required>
                 <InputLabel id="area">Area</InputLabel>
                 <Select
                   defaultValue="All"
                   labelId="area"
+                  label="Area"
                   name="area"
                   onClick={handleFilterChange}
                 >
@@ -311,10 +313,11 @@ const ComplaintAdmin = ({
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={2}>
-              <FormControl variant="filled" fullWidth margin="dense" required>
+              <FormControl variant="outlined" fullWidth margin="dense" required>
                 <InputLabel id="status">Status</InputLabel>
                 <Select
                   defaultValue="All"
+                  label="Status"
                   labelId="status"
                   onClick={handleFilterChange}
                   name="status"
