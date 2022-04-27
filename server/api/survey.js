@@ -4,6 +4,7 @@ const Surveys = require("../models/surveyModel");
 const verify = require("./verifyToken");
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
+const Complaints = require("../models/complaintModel.js");
 
 /**
  * ADD NEW SURVEYS
@@ -154,6 +155,26 @@ router.get("/responseCount/:surveyId", verify, async (req, res) => {
     res.status(200).json(count);
   } catch (error) {
     res.send(error);
+  }
+});
+
+/**
+ * GET COUNT DETAILS FOR ADMIN DASHBOARD
+ *
+ * Can be used to get the number of surveys,complaints and users
+ *
+ * ROUTE : PRIVATE
+ * URL = /api/admin/survey/dashboard/getdetails
+ */
+
+router.get("/dashboard/getdetails", verify, async (req, res) => {
+  try {
+    const userCount = await User.countDocuments({});
+    const surveyCount = await Surveys.countDocuments({});
+    const complaintsCount = await Complaints.countDocuments({});
+    res.status(200).json({userCount, surveyCount, complaintsCount});
+  } catch (error) {
+    res.status(400).json(error);
   }
 });
 

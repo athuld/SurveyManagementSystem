@@ -6,7 +6,6 @@ import Login from "./components/Login-Register/Login";
 import Register from "./components/Login-Register/Register";
 import AlertModal from "./components/AlertModal/Alert";
 import UserHome from "./components/User-Home/UserHome";
-import AdminHome from "./components/Admin/Admin-Home/AdminHome";
 import SurveyHome from "./components/Admin/Survey/SurveyHome";
 import NewSurvey from "./components/Admin/Survey/NewSurvey";
 import SurveyTab from "./components/User-Survey/SurveyTab";
@@ -15,6 +14,7 @@ import Users from "./components/Admin/Users/Users";
 import Response from "./components/Admin/Response/Response";
 import UserComplaint from "./components/User-Complaint/User-Complaint";
 import ComplaintAdmin from "./components/Admin/Complaints/ComplaintAdmin";
+import Dashboard from "./components/Admin/Admin-Home/Dashboard"
 
 function App() {
   const location = useLocation();
@@ -74,7 +74,7 @@ function App() {
           <Route path="/user/complaints" exact>
             <UserComplaint isOpen={isOpen} setIsOpen={setIsOpen} />
           </Route>
-          <Route path="/admin" component={AdminHome} exact />
+          <Route path="/admin" component={Dashboard} exact />
           <Route path="/admin/users" exact>
             <Users
               isOpen={isOpen}

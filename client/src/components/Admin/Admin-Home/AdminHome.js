@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   HomeTwoTone,
   AssignmentTwoTone,
-  FeedbackTwoTone,
   PeopleTwoTone,
   BookTwoTone,
 } from "@material-ui/icons";
@@ -83,11 +82,6 @@ const AdminHome = () => {
       text: "Complaints",
       icon: <BookTwoTone />,
       onClick: () => history.push("/admin/complaints"),
-    },
-    {
-      text: "Feedbacks",
-      icon: <FeedbackTwoTone />,
-      onClick: () => history.push("/admin/feedbacks"),
     },
   ];
 

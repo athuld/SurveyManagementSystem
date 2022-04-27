@@ -14,7 +14,7 @@ const NavBar = ({ user }) => {
     return (
       <nav className="navbar">
         <div className="logo-name">
-          <a href="# ">Survey Guru</a>
+          <a href="# ">E - Service Portal</a>
         </div>
         <ul className="navig-items">
           <li>
@@ -36,7 +36,7 @@ const NavBar = ({ user }) => {
   return (
     <nav className="navbar">
       <div className="logo-name">
-        <a href="# ">Survey Guru</a>
+        <a href="# ">E - Service Portal</a>
       </div>
       <ul className="navig-items">
         <li>
