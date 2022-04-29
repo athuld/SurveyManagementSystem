@@ -15,7 +15,7 @@ app.use(cors());
 // Import the configs
 dotenv.config();
 
-app.listen(5001, console.log("Server Started"));
+app.listen(process.env.PORT, console.log("Server Started"));
 
 // Connect to database
 mongoose.connect(
